@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1">
+    <title>title</title>
+    <style type="text/css">
+        canvas{
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="my_canvas" width="500" height="500"></canvas>
+
+    <script type="text/javascript">
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext('2d')
+
+        ctx.strokeRect(20,20,100,100)
+        ctx.fillStyle = "#ff5733"
+        ctx.fillRect(100,100,100,100)
+        ctx.fillStyle = "rgba(221, 255, 51, 0.5)"
+        ctx.fillRect(180,180,100,100)
+        ctx.fillStyle = "gray"
+        ctx.fillRect(260,260,100,100)  
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "red"
+        ctx.strokeRect(340,340,100,100) 
+    </script>
+</body>
+</html>
