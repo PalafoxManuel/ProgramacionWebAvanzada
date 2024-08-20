@@ -81,8 +81,9 @@
 
         var imagen = new Image();
         imagen.src = "arena.jpg";
-        ctx.drawImage(imagen, 350, 390, 100,100);
-
+        imagen.onload = function() {
+            ctx.drawImage(imagen, 350, 390, 100, 100);
+        };
         </script>
 </body>
 </html>
