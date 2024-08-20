@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1">
+    <title>title</title>
+    <style type="text/css">
+        canvas{
+            background-color: rgb(41, 9, 219);
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="my_canvas" width="800" height="800"></canvas>
+
+    <script type="text/javascript">
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext('2d')
+
+
+        ctx.strokeRect(20,20,100,100);
+        ctx.fillStyle = "#ff5733"
+        ctx.fillRect(100,100,100,100);
+        ctx.fillStyle = "rgba(221, 255, 51, 0.5)"
+        ctx.fillRect(180,180,100,100);
+        ctx.fillStyle = "gray"
+        ctx.fillRect(260,260,100,100);
+        ctx.lineWidth = 4;
+        ctx.strokeRect(340,340,100,100);
+
+        ctx.beginPath()
+        ctx.moveTo(400,100);
+        ctx.lineTo(400,100);
+        ctx.closePath();
+        ctx.stroke();
+
+
+        ctx.beginPath()
+        ctx.moveTo(250,280);
+        ctx.lineTo(30,150);
+        ctx.lineTo(100,450)
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(300, 80, 50, 0, 2 * Math.PI);
+        ctx.fillStyle = "green";
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(300, 100, 10, 0.4, 0.9 * Math.PI);
+        ctx.stroke();
+
+        ctx.font = "45px Georgia"
+        ctx.fillStyle = "yellow";
+        ctx.fillText("Buenas Tardes", 400, 50)
+        ctx.strokeText("Buenas Tardes", 400, 50)
+        ctx.stroke();
+
+        var grd = ctx.createLinearGradient(150,300,170,200);
+
+        grd.addColorStop(0, "#F01919");
+        grd.addColorStop(0.5, "#E6F019");
+        grd.addColorStop(1, "#29F019");
+
+        ctx.fillStyle = grd;
+        ctx.fillRect(150,300,250,100);
+
+        var grd2 = ctx.createRadialGradient(490,250,150,50,300,80);
+
+        grd2.addColorStop(0, "gray");
+        grd2.addColorStop(0.5, "#E6F019");
+        grd2.addColorStop(1, "#29F019");
+
+        ctx.fillStyle = grd2;
+        ctx.fillRect(450,350,300,100)
+
+        var imagen = new Image();
+        imagen.src = "arena.jpg";
+        ctx.drawImage(imagen, 350, 390, 100,100);
+
+        </script>
+</body>
+</html>
