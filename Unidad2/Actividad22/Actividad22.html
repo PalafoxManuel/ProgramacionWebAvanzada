@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="my_canvas" width="700" height="700"></canvas>
+
+    <script type="text/javascript">
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext('2d')
+
+        ctx.strokeRect(0,0,700,700);
+        ctx.fillStyle = "#ff5733"
+        ctx.fillStyle = "#50C1E8"
+        ctx.fillRect(0, 0, 700, 700); 
+        
+        // Sol
+        ctx.beginPath();
+        ctx.arc(700, 0, 200, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#FAE000"; 
+        ctx.fill();
+
+        // monataña izquierda
+        ctx.beginPath();
+        ctx.moveTo(-30, 700);  
+        ctx.lineTo(120, 210);  
+        ctx.lineTo(365, 700); 
+        ctx.closePath();  
+        ctx.fillStyle = "#8A601C";  
+        ctx.fill();
+        
+        // pico de la montaña
+        ctx.beginPath();
+        ctx.moveTo(77, 350);  
+        ctx.lineTo(120, 210);  
+        ctx.lineTo(190, 350); 
+        ctx.closePath();  
+        ctx.fillStyle = "#ffffff";  
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(77, 350);  
+        ctx.lineTo(105, 400);  
+        ctx.lineTo(150, 350); 
+        ctx.closePath();  
+        ctx.fillStyle = "#ffffff";  
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(150, 350);  
+        ctx.lineTo(180, 400);  
+        ctx.lineTo(190, 350); 
+        ctx.closePath();  
+        ctx.fillStyle = "#ffffff";  
+        ctx.fill();
+
+        // monataña derecha
+        ctx.beginPath();
+        ctx.moveTo(340, 700);  
+        ctx.lineTo(500, 210);  
+        ctx.lineTo(760, 700); 
+        ctx.closePath();  
+        ctx.fillStyle = "#8A601C";  
+        ctx.fill();
+
+        // pico de la montaña
+        ctx.beginPath();
+        ctx.moveTo(454, 350);  
+        ctx.lineTo(500, 210);  
+        ctx.lineTo(575, 350); 
+        ctx.closePath();  
+        ctx.fillStyle = "#ffffff";  
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(454, 350);  
+        ctx.lineTo(480, 400);  
+        ctx.lineTo(520, 350); 
+        ctx.closePath();  
+        ctx.fillStyle = "#ffffff";  
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(520, 350);  
+        ctx.lineTo(555, 400);  
+        ctx.lineTo(575, 350); 
+        ctx.closePath();  
+        ctx.fillStyle = "#ffffff";  
+        ctx.fill();
+
+        // copas de arboles
+        ctx.beginPath();
+        ctx.arc(0, 700, 85, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#1FCF06"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(95, 700, 85, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#1FCF06"; 
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.arc(235, 700, 85, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#1FCF06"; 
+        ctx.fill();
+    
+        ctx.beginPath();
+        ctx.arc(350, 700, 85, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#1FCF06"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(480, 700, 85, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#1FCF06"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(575, 700, 85, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#1FCF06"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(700, 700, 85, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#1FCF06"; 
+        ctx.fill();
+
+        // Nube
+
+        ctx.beginPath();
+        ctx.arc(65, 120, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#ffffff"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(95, 115, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#ffffff"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(125, 120, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#ffffff"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(155, 120, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#ffffff"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(65, 85, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#ffffff"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(95, 85, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#ffffff"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(125, 85, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#ffffff"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(155, 85, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#ffffff"; 
+        ctx.fill();
+        
+    </script>
+</body>
+</html>
