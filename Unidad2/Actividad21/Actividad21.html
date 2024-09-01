@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="my_canvas" width="700" height="700"></canvas>
+
+    <script type="text/javascript">
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext('2d')
+
+        ctx.strokeRect(0,0,700,700);
+        ctx.fillStyle = "#ff5733"
+        
+        // Cabeza
+        ctx.beginPath();
+        ctx.arc(200, 130, 60, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#d8b185"; 
+        ctx.fill();
+
+        // gorra
+        ctx.fillStyle = "#000000"; 
+        ctx.fillRect(140, 60, 120, 45); 
+        ctx.fillRect(260, 90, 55, 15);
+
+        ctx.beginPath();
+        ctx.moveTo(160, 105);  // Comienza en la parte inferior izquierda de la gorra
+        ctx.lineTo(140, 150);  // Baja a la izquierda
+        ctx.lineTo(140, 105);  // Sube de nuevo hacia la gorra
+        ctx.closePath();  // Cierra el triángulo para formar el mechón
+        ctx.fillStyle = "#000000";  // Color del cabello
+        ctx.fill();
+
+        // Ojos
+        ctx.beginPath();
+        ctx.arc(180, 120, 10, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#000000";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(220, 120, 10, 0, Math.PI * 2, true); 
+        ctx.fill();
+
+        // Sonrisa
+        ctx.beginPath();
+        ctx.arc(200, 160, 20, 0, Math.PI, false);
+        ctx.stroke();
+
+        // cuello
+        ctx.fillStyle = "#d8b185"; 
+        ctx.fillRect(178, 180, 45, 20);
+        
+        // Brazos
+        ctx.fillStyle = "#d8b185"; 
+        ctx.fillRect(125, 200, 25, 100); // Brazo izquierdo
+        ctx.fillRect(250, 200, 25, 100); // Brazo derecho
+
+        // Camiseta
+        ctx.fillStyle = "#1D1F1E"; 
+        ctx.fillRect(150, 200, 100, 150);
+        ctx.fillRect(125, 200, 25, 80); 
+        ctx.fillRect(250, 200, 25, 80);
+
+        // Pantalon
+        ctx.fillStyle = "#4CB3BF"; 
+        ctx.fillRect(150, 350, 100, 40);
+
+        // Piernas
+        ctx.fillStyle = "#4CB3BF";
+        ctx.fillRect(150, 390, 35, 130); // Pierna izquierda
+        ctx.fillRect(215, 390, 35, 130); // Pierna derecha
+        
+        // Tenis
+        ctx.fillStyle = "#4D4D4D"; 
+        ctx.fillRect(150, 500, 45, 25);
+        ctx.fillRect(215, 500, 45, 25);
+        
+        // Empeine del teni
+        ctx.fillRect(150, 510, 50, 15);
+        ctx.fillRect(215, 510, 50, 15);
+        
+        // Linea blanca del teni
+        ctx.fillStyle = "#EAEAEA"; 
+        ctx.fillRect(150, 515, 45, 10);
+        ctx.fillRect(215, 515, 45, 10);
+        
+        ctx.fillStyle = "#EAEAEA";
+        ctx.fillRect(195, 510, 5, 5);
+        ctx.fillRect(260, 510, 5, 5);
+
+        // Linea recta en la camisa
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(185, 200, 30, 150); 
+    </script>
+</body>
+</html>
