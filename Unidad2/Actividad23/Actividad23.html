@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="my_canvas" width="1200" height="700"></canvas>
+
+    <script type="text/javascript">
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext('2d')
+
+        // cielo azul
+        ctx.fillStyle = "#50C1E8";
+        ctx.fillRect(0, 0, 1200, 500); 
+
+        // Suelo
+        ctx.fillStyle = "#EC8B32";
+        ctx.fillRect(0, 500, 1200, 30); 
+
+        // Suelo 2
+        ctx.fillStyle = "#955922";
+        ctx.fillRect(0, 540, 1200, 160); 
+        
+        // Lineas horizontales del suelo 2
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "#4B2E13";
+        for (let i = 0; i < 5; i++) {
+            let y = 535 + i * 35; // Calcula la posición y para cada línea
+            
+            ctx.beginPath();      // Comenzar un nuevo trazado
+            ctx.moveTo(0, y);     // Moverse al inicio de la línea (x1, y)
+            ctx.lineTo(1200, y);  // Dibujar hasta el final de la línea (x2, y)
+            ctx.stroke();         // Dibujar la línea
+        }   
+
+        // Lineas verticales del suelo 2
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "#4B2E13";
+        for (let i = 0; i < 27; i++) {
+            let x = 5 + i * 45; 
+            
+            ctx.beginPath();    
+            ctx.moveTo(x, 540); 
+            ctx.lineTo(x, 700); 
+            ctx.stroke();       
+        }
+
+        // Cuadrado a la izquierda en el aire weon
+        ctx.fillStyle = "#EC8B32";
+        ctx.fillRect(80, 180, 80, 80);
+        ctx.strokeStyle = "#000000"; 
+        ctx.lineWidth = 5; 
+        ctx.strokeRect(80, 180, 80, 80); 
+
+        // Puntos del cuadrado
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(90, 190, 10, 10);
+        ctx.fillRect(90, 240, 10, 10);
+        ctx.fillRect(140, 190, 10, 10);
+        ctx.fillRect(140, 240, 10, 10);
+
+        // Par de cuadrados en el aire
+        ctx.fillStyle = "#EC8B32";
+        ctx.fillRect(250, 20, 80, 80);
+        ctx.strokeStyle = "#000000"; 
+        ctx.lineWidth = 5; 
+        ctx.strokeRect(250, 20, 80, 80);
+        
+        // Puntos del cuadrado
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(260, 30, 10, 10);
+        ctx.fillRect(260, 80, 10, 10);
+        ctx.fillRect(310, 30, 10, 10);
+        ctx.fillRect(310, 80, 10, 10);
+
+        // Segundo cuadrado del par
+        ctx.fillStyle = "#EC8B32";
+        ctx.fillRect(330, 20, 80, 80);
+        ctx.strokeStyle = "#000000"; 
+        ctx.lineWidth = 5; 
+        ctx.strokeRect(330, 20, 80, 80);
+
+        // Puntos del cuadrado
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(340, 30, 10, 10);
+        ctx.fillRect(340, 80, 10, 10);
+        ctx.fillRect(390, 30, 10, 10);
+        ctx.fillRect(390, 80, 10, 10);
+
+        //Cuadrado de la derecha
+        ctx.fillStyle = "#EC8B32";
+        ctx.fillRect(1010, 110, 80, 80);
+        ctx.strokeStyle = "#000000"; 
+        ctx.lineWidth = 5; 
+        ctx.strokeRect(1010, 110, 80, 80);
+
+        // Puntos del cuadrado
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(1020, 120, 10, 10);
+        ctx.fillRect(1020, 170, 10, 10);
+        ctx.fillRect(1070, 120, 10, 10);
+        ctx.fillRect(1070, 170, 10, 10);
+
+        // Cuadrado verde a la derecha 
+        ctx.fillStyle = "#3ACD0D";
+        ctx.fillRect(990, 290, 210, 210);
+
+        // Tuercas cuadrado verde
+        ctx.beginPath();
+        ctx.arc(1010, 310, 12, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#9F9F9F"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke(); 
+
+        ctx.beginPath();
+        ctx.arc(1010, 480, 12, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#9F9F9F"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke(); 
+
+        // Lineas del cuadro verde
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "#000000";
+        ctx.beginPath();    
+        ctx.moveTo(990, 290); 
+        ctx.lineTo(1200, 290); 
+        ctx.stroke();
+
+        ctx.beginPath();    
+        ctx.moveTo(990, 290); 
+        ctx.lineTo(990, 500); 
+        ctx.stroke();
+
+        // Rectangulo azul
+        ctx.fillStyle = "#2C8FDE";
+        ctx.fillRect(450, 180, 210, 320);
+
+        // Lineas del cuadro azul
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "#000000";
+        ctx.beginPath();    
+        ctx.moveTo(450, 180); 
+        ctx.lineTo(450, 290); 
+        ctx.stroke();
+
+        ctx.beginPath();    
+        ctx.moveTo(450, 180); 
+        ctx.lineTo(660, 180); 
+        ctx.stroke();
+
+        ctx.beginPath();    
+        ctx.moveTo(660, 180); 
+        ctx.lineTo(660, 500); 
+        ctx.stroke();
+
+        // Tuercas cuadro azul
+        ctx.beginPath();
+        ctx.arc(470, 200, 12, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#9F9F9F"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.arc(640, 200, 12, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#9F9F9F"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(640, 480, 12, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#9F9F9F"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke(); 
+
+        // Sombra rectangulo azul
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(662, 260, 30, 240);
+
+        // Cuadrado rosa en el centro
+        ctx.fillStyle = "#F1948A";
+        ctx.fillRect(320, 290, 210, 210);
+
+        // Lineas del cuadro rosa
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "#000000";
+        ctx.beginPath();    
+        ctx.moveTo(320, 290); 
+        ctx.lineTo(530, 290); 
+        ctx.stroke();
+
+        ctx.beginPath();    
+        ctx.moveTo(320, 290); 
+        ctx.lineTo(320, 500); 
+        ctx.stroke();
+
+        ctx.beginPath();    
+        ctx.moveTo(530, 290); 
+        ctx.lineTo(530, 500); 
+        ctx.stroke();
+
+        // Tuercas cuadro rosa
+        ctx.beginPath();
+        ctx.arc(340, 310, 12, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#9F9F9F"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.arc(510, 310, 12, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#9F9F9F"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(340, 480, 12, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#9F9F9F"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke(); 
+
+        ctx.beginPath();
+        ctx.arc(510, 480, 12, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#9F9F9F"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke();
+
+        // Sombra cuadro rosa
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(532, 350, 30, 150);
+
+        // Tuberia verde
+        ctx.fillStyle = "#1B9916";
+        ctx.fillRect(760, 350, 120, 150);
+        ctx.strokeStyle = "#000000"; 
+        ctx.lineWidth = 3; 
+        ctx.strokeRect(760, 350, 120, 150);
+        
+        // Superior tuberia
+        ctx.fillStyle = "#1B9916";
+        ctx.fillRect(740, 300, 160, 50);
+        ctx.strokeStyle = "#000000"; 
+        ctx.lineWidth = 3; 
+        ctx.strokeRect(740, 300, 160, 50);
+
+        // Gradiante manual XD
+        ctx.fillStyle = "#50C1E8";
+        ctx.fillRect(741, 301, 30, 48);
+        ctx.fillRect(761, 352, 10, 147);
+
+        ctx.fillStyle = "#136F10";
+        ctx.fillRect(830, 301, 20, 48);
+        ctx.fillRect(830, 352, 20, 147);
+
+        ctx.fillStyle = "#0D490B";
+        ctx.fillRect(850, 301, 49, 48);
+        ctx.fillRect(850, 352, 29, 147);
+
+        // Planta de la tuberia
+        ctx.fillStyle = "#136F10";
+        ctx.fillRect(810, 230, 20, 68);
+
+        ctx.beginPath();
+        ctx.arc(820, 200, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#FF1B1B"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#000000"; 
+        ctx.stroke(); 
+
+        ctx.beginPath();
+        ctx.moveTo(820, 200);  
+        ctx.lineTo(770, 280);  
+        ctx.lineTo(680, 200); 
+        ctx.closePath();  
+        ctx.fillStyle = "#50C1E8";  
+        ctx.fill();
+    </script>
+</body>
+</html>
