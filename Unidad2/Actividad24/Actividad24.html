@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="my_canvas" width="1200" height="700"></canvas>
+
+    <script type="text/javascript">
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext('2d')
+
+        // cielo azul
+        ctx.fillStyle = "#0A1FD1";
+        ctx.fillRect(0, 0, 1200, 500); 
+
+        // Linea de cesped 1
+        ctx.fillStyle = "#45C20A";
+        ctx.fillRect(0, 480, 1200, 20); 
+
+        // Linea de cesped 2
+        ctx.fillStyle = "#308807";
+        ctx.fillRect(0, 500, 1200, 20);
+
+        // Linea de cesped 3
+        ctx.fillStyle = "#1A4B04";
+        ctx.fillRect(0, 520, 1200, 20);
+        
+        // Generar el patrón de cuadros
+        const medida = 40;
+
+        for (let y = 540; y < 700; y += medida) {
+            for (let x = 0; x < 1200; x += medida) {
+                // Alternar colores
+                if ((Math.floor(x / medida) + Math.floor(y / medida)) % 2 === 0) {
+                    ctx.fillStyle = "#4B2E13";  // Color oscuro
+                } else {
+                    ctx.fillStyle = "#955922";  // Color claro
+                }
+                ctx.fillRect(x, y, medida, medida);
+            }
+        }
+
+        // Linea transparente
+        ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+        ctx.fillRect(0, 540, 1200, 20);
+
+        // Anillos 
+        ctx.beginPath();
+        ctx.arc(170, 400, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#0A1FD1"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#FFFF00"; 
+        ctx.stroke(); 
+
+        ctx.beginPath();
+        ctx.arc(320, 400, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#0A1FD1"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#FFFF00"; 
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(470, 400, 35, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#0A1FD1"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#FFFF00"; 
+        ctx.stroke();
+
+        // Tronco palmera derecha
+        ctx.fillStyle = "#7C4A1D";
+        ctx.fillRect(720, 160, 30, 320);
+
+        // Tallo del girasol
+        ctx.fillStyle = "#2C7908";
+        ctx.fillRect(960, 390, 10, 90);
+
+        // petalos del girasol
+        ctx.beginPath();
+        ctx.arc(990, 345, 25, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#F2F705"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(965, 365, 25, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#F2F705"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(945, 345, 25, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#F2F705"; 
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(965, 325, 25, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#F2F705"; 
+        ctx.fill();
+
+        // Centro del girasol
+        ctx.beginPath();
+        ctx.arc(965, 345, 25, 0, Math.PI * 2, true); 
+        ctx.fillStyle = "#0F2903"; 
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#F2F705"; 
+        ctx.stroke();
+
+        // Hojas de las palmeras
+        function dibujarHojasPalmera(x, y, longitud, cantidadHojas, anguloInicial) {
+            const anguloIncremento = (2 * Math.PI) / cantidadHojas; // Ángulo entre cada hoja
+            
+            for (let i = 0; i < cantidadHojas; i++) {
+                let angulo = anguloInicial + i * anguloIncremento;
+
+                // Coordenadas de los vértices de los triángulo
+                let x1 = x + longitud * Math.cos(angulo);
+                let y1 = y + longitud * Math.sin(angulo);
+                let x2 = x + (longitud - 30) * Math.cos(angulo - 0.1);
+                let y2 = y + (longitud - 30) * Math.sin(angulo - 0.1);
+
+                // Dibujar el triángulo para cada hoja
+                ctx.beginPath();
+                ctx.moveTo(x, y);       // Punto de origen
+                ctx.lineTo(x1, y1);  
+                ctx.lineTo(x2, y2);    
+                ctx.closePath();
+                ctx.fillStyle = "#45C20A";
+                ctx.fill();
+            }
+        }
+
+        dibujarHojasPalmera(735, 160, 100, 20, 0); 
+        dibujarHojasPalmera(780, 135, 100, 20, Math.PI / 4); 
+        dibujarHojasPalmera(675, 135, 100, 20, Math.PI / 2);
+        dibujarHojasPalmera(735, 85, 100, 20, 0); 
+
+
+        dibujarHojasPalmera(-20, 230, 100, 20, 0); 
+        dibujarHojasPalmera(15, 255, 100, 20, 0); 
+
+        dibujarHojasPalmera(0, 0, 100, 20, 0); 
+        dibujarHojasPalmera(0, 55, 100, 20, 0); 
+        dibujarHojasPalmera(15, 75, 100, 20, 0); 
+
+
+    </script>
+</body>
+</html>
