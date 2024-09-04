@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8" />
@@ -50,9 +50,7 @@
 
         const player = new Rectangulo(400, 400, 50, 50, color, speed);
         
-        const cuadro = new Rectangulo(250, 250, 50, 50, "000000", speed,
-            
-        );
+        const cuadro = new Rectangulo(250, 250, 50, 50, "000000", speed);
 
 
         document.addEventListener("keydown", function(e){
@@ -78,36 +76,33 @@
         function update(){
 
             if(direction == "up"){
-                player.y-=(speed+10);
+                player.y-=(speed); 
                 if(player.y<0){
-                    player.y = 540;
+                    player.y = 800;
                 }
             }else if(direction == "left"){
-                player.x-=(speed+10);
+                player.x-=(speed);
                 if(player.x<0){
-                    player.x=500;
+                    player.x=800;
                 }
             }else if(direction == "down"){
-                player.y+=(speed+10);
-                if(player.y>500){
+                player.y+=(speed);
+                if(player.y>760){
                     player.y= -40;
                 }
             }else if(direction == "right"){
-                player.x+=(speed+10);
-                if(player.x>500){
+                player.x+=(speed);
+                if(player.x>760){
                     player.x = -40;
                 }
             }
 
-            if(player.colision(player)){
-                //cuadro.x=Math.floor(Math.random * (250-0)+0);
-                //cuadro.y=Math.floor(Math.random * (250-0)+0);
-                cuadro.x+=30;
-                cuadro.y+=30;
+            if(player.colision(cuadro)){
+                cuadro.x= Math.floor(Math.random() * 790);
+                cuadro.y= Math.floor(Math.random() * 790)
                 console.log("Colision");
             }
         }
-
         
         function pintar(){
             ctx.fillStyle = "rgb(41, 9, 219)";
@@ -117,8 +112,10 @@
             ctx.strokeRect(player.x,player.y,player.a,player.h);
             ctx.fillStyle = player.color
             ctx.fillRect(player.x,player.y,player.a,player.h);
+            
             ctx.fillStyle="#000000";
             ctx.fillRect(cuadro.x,cuadro.y,cuadro.a,cuadro.h);
+
             ctx.fillText("speed:"+speed,450,20);
             update();
             requestAnimationFrame(pintar);
