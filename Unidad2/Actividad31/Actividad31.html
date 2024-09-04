@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1">
+    <title>title</title>
+    <style type="text/css">
+        canvas{
+            background-color: rgb(41, 9, 219);
+        }
+    </style>
+</head>
+<body>    
+
+    
+    <canvas id="my_canvas" width="800" height="800"></canvas>
+    
+    <script type="text/javascript">
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext('2d')
+        var figura = 1
+        var color = getRandomColor();
+        var presion = false;
+        color = getRandomColor();
+        ctx.fillStyle = color;
+        var color2 = "rgb(41, 9, 219)";
+        var direction = "";
+        var speed = 5;
+        
+        class Rectangulo {
+            constructor(x, y, h,a, color, speed) {
+            this.x = x;
+            this.y = y;
+            this.h = h;
+            this.a = a;
+            this.color = color;
+            this.speed = speed;
+            }
+
+            colision(cuadro){
+            if(this.x < cuadro.x + cuadro.a &&  this.x + this.a > cuadro.x &&    this.y < cuadro.y + cuadro.h &&    this.y + this.h > cuadro.y){   
+                return true;
+            }else{
+            return false
+            }
+        }
+
+        }
+
+        const player = new Rectangulo(400, 400, 50, 50, color, speed);
+        
+        const cuadro = new Rectangulo(250, 250, 50, 50, "#000000", speed);
+
+        const bloque = new Rectangulo(200,100,30,300, "#000000", 0)
+
+        document.addEventListener("keydown", function(e){
+            
+            if(e.keyCode==87){
+                direction = "up";
+            }else if(e.keyCode==65){
+                direction = "left";
+            }else if(e.keyCode==83){
+                direction = "down";
+            }else if(e.keyCode==68){
+                direction = "right";
+            }else if(e.keyCode == 32){
+                speed+=2.5;
+            }
+
+        });
+
+        document.addEventListener("keyup", function(e){
+    
+        });
+
+        function update(){
+
+            if(direction == "up"){
+                player.y-=(speed); 
+                if(player.y<0){
+                    player.y = 800;
+                }
+                if (!player.colision(bloque) || player.y >= bloque.y + bloque.h) {
+                    player.y -= speed;
+                } else {
+                    player.y = bloque.y + bloque.h;
+                }
+            }else if(direction == "left"){
+                player.x-=(speed);
+                if(player.x<0){
+                    player.x=800;
+                }
+                if (!player.colision(bloque) || player.x >= bloque.x + bloque.a) {
+                    player.x -= speed;
+                } else {
+                    player.x = bloque.x + bloque.a; 
+                }                
+            }else if(direction == "down"){
+                player.y+=(speed);
+                if(player.y>760){
+                    player.y= -40;
+                }
+                if (!player.colision(bloque) || player.y + player.h <= bloque.y) {
+                    player.y += speed;
+                } else {
+                    player.y = bloque.y - player.h; 
+                }
+            }else if(direction == "right"){
+                player.x+=(speed);
+                if(player.x>760){
+                    player.x = -40;
+                }
+                if (!player.colision(bloque) || player.x + player.a <= bloque.x) {
+                    player.x += speed;
+                } else {
+                    player.x = bloque.x - player.a; 
+                }
+            }
+
+            if(player.colision(cuadro)){
+                cuadro.x= Math.floor(Math.random() * 790);
+                cuadro.y= Math.floor(Math.random() * 790)
+                console.log("Colision");
+            }
+
+            if(player.colision(bloque)){
+                console.log("Colision bloque estatico")
+            }
+        }
+        
+        function pintar(){
+            ctx.fillStyle = "rgb(41, 9, 219)";
+            ctx.fillRect(0,0,800,800);
+
+            ctx.fillStyle="#000000";
+            ctx.strokeRect(player.x,player.y,player.a,player.h);
+            ctx.fillStyle = player.color
+            ctx.fillRect(player.x,player.y,player.a,player.h);
+            
+            ctx.fillStyle="#000000";
+            ctx.fillRect(cuadro.x,cuadro.y,cuadro.a,cuadro.h);
+
+            ctx.fillRect(bloque.x, bloque.y, bloque.a, bloque.h);
+
+            ctx.fillText("speed:"+speed,450,20);
+            update();
+            requestAnimationFrame(pintar);
+        }
+        
+        requestAnimationFrame(pintar);
+
+        function getRandomColor() {
+        var trans = '0.5'; // 50% transparency
+        var color = 'rgba(';
+        for (var i = 0; i < 3; i++) {
+            color += Math.floor(Math.random() * 255) + ',';
+        }
+        color += trans + ')'; // add the transparency
+        return color;
+        }
+        </script>
+</body>
+</html>
