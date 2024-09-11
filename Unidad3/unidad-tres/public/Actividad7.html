@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app">
+
+
+      <h2>Resultados:</h2>
+
+      
+      <br>
+      
+      <li v-for="user in ussers" :key="user.name">
+          {{ user.name }} - {{ user.pass }}
+        </li>
+        
+        <br>
+        
+        <input v-model="name" placeholder="Escribe tu nombre">
+        <input v-model="pass" placeholder="Escribe una contraseña">
+        <button @click="agregarUsuario">
+            Registrar
+        </button>
+      
+
+  </div>
+
+  <script type="module">
+      import { createApp, ref } from 'https://unpkg.com/vue@3.2.47/dist/vue.esm-browser.js';
+
+      createApp({
+          setup() {
+
+              
+              const nombre = ref('');
+              const contraseña = ref('');
+
+              let ussers= ref([
+                {
+                    "name":'Juan',
+                    "pass":'1234'
+                },
+                {
+                    "name":'pepe',
+                    "pass":'4321'
+                }
+              ]);
+
+              return {
+                  ussers,
+                  nombre,
+                  contraseña
+                  
+              }
+          },
+          methods: {
+            agregarUsuario(){
+                let tmp = {
+                    "name":this.nombre,
+                    "pass":this.contraseña
+                }
+                console.log("asd")
+                console.log(tmp.name)
+                console.log(tmp.pass)
+                this.ussers.push(tmp);
+            }
+
+          }
+      }).mount('#app')
+  </script>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
