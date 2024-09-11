@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app">
+      <h1> Hola {{ nombre }} </h1>
+      <input v-model="nombre" placeholder="Escribe tu nombre">
+
+      <br>
+
+      <button @click="count++">
+          Clicks: {{ count }}
+      </button>
+
+      <br>
+
+      <h1>Suma</h1>
+      
+      <input v-model.number="num1" placeholder="Número 1" type="number">
+      <input v-model.number="num2" placeholder="Número 2" type="number">
+
+      <button @click="resultado = num1 + num2">Calcular</button>
+
+      <h2>Resultado: {{ resultado }}</h2>
+
+  </div>
+
+  <script type="module">
+      import { createApp, ref } from 'https://unpkg.com/vue@3.2.47/dist/vue.esm-browser.js';
+
+      createApp({
+          setup() {
+              const nombre = ref('');
+              const count = ref(0);
+              const num1 = ref(0);
+              const num2 = ref(0);
+              const resultado = ref(0);
+
+              return {
+                  nombre,
+                  count,
+                  num1,
+                  num2,
+                  resultado
+              }
+          }
+      }).mount('#app')
+  </script>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
