@@ -41,8 +41,8 @@
           setup() {
 
               
-              const nombre = ref('');
-              const contraseña = ref('');
+              const name = ref('');
+              const pass = ref('');
 
               let ussers= ref([
                 {
@@ -57,16 +57,16 @@
 
               return {
                   ussers,
-                  nombre,
-                  contraseña
+                  name,
+                  pass
                   
               }
           },
           methods: {
             agregarUsuario(){
                 let tmp = {
-                    "name":this.nombre,
-                    "pass":this.contraseña
+                    "name":this.name,
+                    "pass":this.pass
                 }
                 console.log("asd")
                 console.log(tmp.name)
