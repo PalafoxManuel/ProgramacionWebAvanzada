@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Acceso</h2>
+
+    <div id="app">
+        <form v-if="!isLoggedIn" @submit.prevent="onSubmit">
+            <fieldset>
+                <legend>Formulario de Acceso</legend>
+                
+                <div>
+                    <label for="username">Nombre de Usuario:</label>
+                    <input type="text" id="username" v-model="username" required>
+                </div>
+                
+                <div>
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" v-model="email" required>
+                </div>
+                
+                <button type="submit">Enviar</button>
+            </fieldset>
+        </form>
+        
+        <h1 v-if="isLoggedIn">Bienvenido {{ username }}</h1>
+    </div>
+
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3.2.47/dist/vue.esm-browser.js';
+
+        createApp({
+            setup() {
+                const username = ref('');
+                const email = ref('');
+                const isLoggedIn = ref(false);
+
+                const onSubmit = () => {
+                    console.log('Nombre de Usuario:', username.value);
+                    console.log('Correo:', email.value);
+
+                    fetch('https://jsonplaceholder.typicode.com/users')
+                        .then(res => res.json())
+                        .then(users => {
+                            const user = users.find(user => user.username === username.value && user.email === email.value);
+                            if (user) {
+                                isLoggedIn.value = true;
+                            } else {
+                                alert('Revise los datos ingresados');
+                            }
+                        })
+                        .catch(error => {
+                            console.log('Looks like there was a problem: \n', error);
+                        });
+                };
+
+                return {
+                    username,
+                    email,
+                    isLoggedIn,
+                    onSubmit
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
