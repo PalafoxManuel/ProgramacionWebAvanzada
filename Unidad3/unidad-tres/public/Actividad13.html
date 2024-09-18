@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Acceso</h2>
+
+    <div id="app">
+        <form v-if="!isLoggedIn" @submit.prevent="onSubmit">
+            <fieldset>
+                <legend>Formulario de Acceso</legend>
+                
+                <div>
+                    <label for="username">Nombre de Usuario:</label>
+                    <input type="text" id="username" v-model="username" required>
+                </div>
+                
+                <div>
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" v-model="email" required>
+                </div>
+                
+                <button type="submit">Enviar</button>
+            </fieldset>
+        </form>
+        
+        <h1 v-if="isLoggedIn">Bienvenido {{ username }}</h1>
+
+        <button v-if="isLoggedIn" @click="toggleAddUser">
+            Agregar
+        </button>
+
+        <form v-if="isLoggedIn && addUser" @submit.prevent="addNewUser">
+            <fieldset>
+                <legend>Agregar usuario</legend>
+                
+                <div>
+                    <label for="newUsername">Nombre de Usuario:</label>
+                    <input type="text" id="newUsername" v-model="newUsername" required>
+                </div>
+                
+                <div>
+                    <label for="newEmail">Correo Electrónico:</label>
+                    <input type="email" id="newEmail" v-model="newEmail" required>
+                </div>
+
+                <div>
+                    <label for="city">Ciudad:</label>
+                    <input type="text" id="city" v-model="city" required>
+                </div>
+                
+                <button type="submit">Agregar</button>
+                <button type="button" @click="toggleAddUser">Cancelar</button>
+            </fieldset>
+        </form>
+
+        <table v-if="isLoggedIn && !addUser">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Ciudad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="user in users" :key="user.id">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.city }}</td>
+                    <td>
+                        <button>Editar</button>
+                        <button>Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3.2.47/dist/vue.esm-browser.js';
+
+        createApp({
+            setup() {
+                const city = ref('');
+                const username = ref('');
+                const email = ref('');
+                const newUsername = ref('');
+                const newEmail = ref('');
+                const addUser = ref(false);
+                const isLoggedIn = ref(false);
+                const users = ref([]);
+
+                const onSubmit = () => {
+                    fetch('users.json')
+                        .then(res => res.json())
+                        .then(data => {
+                            const user = data.find(user => user.username === username.value && user.email === email.value);
+                            if (user) {
+                                isLoggedIn.value = true;
+                                users.value = data;
+                            } else {
+                                alert('Revise los datos ingresados');
+                            }
+                        })
+                        .catch(error => {
+                            console.log('Looks like there was a problem: \n', error);
+                        });
+                };
+
+                const toggleAddUser = () => {
+                    addUser.value = !addUser.value;
+                };
+
+                const addNewUser = () => {
+                    const newUser = {
+                        id: users.value.length + 1,
+                        name: newUsername.value,
+                        email: newEmail.value,
+                        city: city.value
+                    };
+                    users.value.push(newUser);
+                    newUsername.value = '';
+                    newEmail.value = '';
+                    city.value = '';
+                    addUser.value = false;
+                };
+
+                return {
+                    username,
+                    email,
+                    newUsername,
+                    newEmail,
+                    city,
+                    isLoggedIn,
+                    addUser,
+                    users,
+                    onSubmit,
+                    toggleAddUser,
+                    addNewUser
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
