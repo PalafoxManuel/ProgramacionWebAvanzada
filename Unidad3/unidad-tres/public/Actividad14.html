@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Acceso</h2>
+
+    <div id="app">
+        <!-- login -->
+        <form v-if="!isLoggedIn" @submit.prevent="onSubmit">
+            <fieldset>
+                <legend>Formulario de Acceso</legend>
+                <div>
+                    <label for="username">Nombre de Usuario:</label>
+                    <input type="text" id="username" v-model="username" required>
+                </div>
+                <div>
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" v-model="email" required>
+                </div>
+                <button type="submit">Enviar</button>
+            </fieldset>
+        </form>
+        <h1 v-if="isLoggedIn">Bienvenido {{ username }}</h1>
+
+        <button v-if="isLoggedIn && !addUser && !editing" @click="toggleAddUser">
+            Agregar
+        </button>
+
+        <!-- Agregar usuario -->
+        <form v-if="isLoggedIn && addUser" @submit.prevent="addNewUser">
+            <fieldset>
+                <legend>Agregar usuario</legend>
+                <div>
+                    <label for="newUsername">Nombre de Usuario:</label>
+                    <input type="text" id="newUsername" v-model="newUsername" required>
+                </div>
+                <div>
+                    <label for="newEmail">Correo Electrónico:</label>
+                    <input type="email" id="newEmail" v-model="newEmail" required>
+                </div>
+                <div>
+                    <label for="city">Ciudad:</label>
+                    <input type="text" id="city" v-model="city" required>
+                </div>
+                <button type="submit">Agregar</button>
+                <button type="button" @click="toggleAddUser">Cancelar</button>
+            </fieldset>
+        </form>
+
+        <!-- Editar usuario -->
+        <form v-if="isLoggedIn && editing" @submit.prevent="saveUser">
+            <fieldset>
+                <legend>Editar usuario</legend>
+                <div>
+                    <label for="editUsername">Nombre de Usuario:</label>
+                    <input type="text" id="editUsername" v-model="newUsername" required>
+                </div>
+                <div>
+                    <label for="editEmail">Correo Electrónico:</label>
+                    <input type="email" id="editEmail" v-model="newEmail" required>
+                </div>
+                <div>
+                    <label for="editCity">Ciudad:</label>
+                    <input type="text" id="editCity" v-model="city" required>
+                </div>
+                <button type="submit">Guardar cambios</button>
+                <button type="button" @click="cancelEdit">Cancelar</button>
+            </fieldset>
+        </form>
+
+        <!-- Tabla de usuarios -->
+        <table v-if="isLoggedIn && !addUser && !editing">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Ciudad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="user in users" :key="user.id">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.address.city }}</td>
+                    <td>
+                        <button @click="editUser(user)">Editar</button>
+                        <button @click="deleteUser(user.id)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3.2.47/dist/vue.esm-browser.js';
+
+        createApp({
+            setup() {
+                const city = ref('');
+                const username = ref('');
+                const email = ref('');
+                const newUsername = ref('');
+                const newEmail = ref('');
+                const addUser = ref(false);
+                const isLoggedIn = ref(false);
+                const users = ref([]);
+                const editing = ref(false);
+                const editIndex = ref(null);
+
+                const checkSession = () => {
+                    const storedUser = localStorage.getItem('sessionUser');
+                    if(storedUser) {
+                        const userData = JSON.parse(storedUser);
+                        username.value = userData.username;
+                        email.value = userData.email;
+                        isLoggedIn.value = true;
+                        fetchUsers();
+                    }
+                };
+
+                const fetchUsers = () => {
+                    fetch('users.json')
+                    .then(res => res.json())
+                    .then(data => {
+                        users.value = data;
+                    })
+                    .catch(error => {
+                        console.log('Looks like there was a problem: \n', error);
+                    });
+                };
+
+                const onSubmit = () => {
+                    fetch('users.json')
+                        .then(res => res.json())
+                        .then(data => {
+                            const user = data.find(user => user.username === username.value && user.email === email.value);
+                            if (user) {
+                                isLoggedIn.value = true;
+                                users.value = data;
+                                localStorage.setItem('sessionUser', JSON.stringify({ username: username.value, email: email.value }))
+                            } else {
+                                alert('Revise los datos ingresados');
+                            }
+                        })
+                        .catch(error => {
+                            console.log('Looks like there was a problem: \n', error);
+                        });
+                };
+
+                const logout = () => {
+                    isLoggedIn.value = false;
+                    localStorage.removeItem('sessionUser');
+                    username.value = '';
+                    email.value = '';
+                };
+
+                const toggleAddUser = () => {
+                    addUser.value = !addUser.value;
+                };
+
+                const addNewUser = () => {
+                    const newUser = {
+                        id: users.value.length + 1,
+                        name: newUsername.value,
+                        email: newEmail.value,
+                        address: {
+                            city: city.value
+                        }
+                    };
+                    users.value.push(newUser);
+                    clearFields();
+                    addUser.value = false;
+                };
+
+                const editUser = (user) => {
+                    newUsername.value = user.name;
+                    newEmail.value = user.email;
+                    city.value = user.address.city;
+                    editIndex.value = users.value.indexOf(user);
+                    editing.value = true;
+                    addUser.value = false;
+                };
+
+                const saveUser = () => {
+                    users.value[editIndex.value].name = newUsername.value;
+                    users.value[editIndex.value].email = newEmail.value;
+                    users.value[editIndex.value].address.city = city.value;
+                    editing.value = false;
+                    clearFields();
+                };
+
+                const cancelEdit = () => {
+                    editing.value = false;
+                    clearFields();
+                };
+
+                const clearFields = () => {
+                    newUsername.value = '';
+                    newEmail.value = '';
+                    city.value = '';
+                }
+
+                const deleteUser = (id) => {
+                    users.value = users.value.filter(user => user.id !== id);
+                };
+
+                checkSession();
+
+                return {
+                    username,
+                    email,
+                    newUsername,
+                    newEmail,
+                    city,
+                    isLoggedIn,
+                    addUser,
+                    users,
+                    editing,
+                    deleteUser,
+                    saveUser,
+                    editUser,
+                    cancelEdit,
+                    onSubmit,
+                    toggleAddUser,
+                    addNewUser
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
