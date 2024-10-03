@@ -92,7 +92,7 @@
                         })
                         .then(res => res.json())
                         .then(data => {
-                            if (data.success) { // Verificar si la autenticación fue exitosa
+                            if (data.success) {
                                 const requestToken = data.request_token;
                                 return fetch('https://api.themoviedb.org/3/authentication/session/new?api_key=3fb53361faa32361439249854a67a197', {
                                     method: 'POST',
@@ -131,9 +131,9 @@
                         .then(res => res.json())
                         .then(data => {
                             if (data.rated) {
-                                userRating.value = data.rated.value; // Guarda el rating del usuario si existe
+                                userRating.value = data.rated.value;
                             } else {
-                                userRating.value = null; // Si no existe rating, resetea el valor
+                                userRating.value = null;
                             }
                         })
                         .catch(error => console.log('Error al obtener rating del usuario: ', error));
@@ -172,10 +172,8 @@
                     })
                     .then(res => {
                         console.log(res);
-                        // Verificar si la respuesta fue exitosa
                         if (res.ok) {
                             alert('Rating eliminado con éxito');
-                            // Actualizar el estado de userRating a null para ocultarlo
                             userRating.value = null;
                         } else {
                             throw new Error('No se pudo eliminar el rating correctamente');
