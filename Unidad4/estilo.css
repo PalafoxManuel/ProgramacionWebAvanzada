@@ -1,0 +1,78 @@
+.container {
+  width: 400px;
+  margin: auto;
+  padding-top: 50px;
+}
+.container form {
+  background-color: #9b59b6;
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid #ddd;
+}
+.container form h1 {
+  color: #ff0000;
+  text-align: center;
+}
+.container form label {
+  color: #ff0000;
+  display: block;
+  margin-bottom: 5px;
+}
+.container form input[type="text"],
+.container form input[type="password"] {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: 60%;
+  margin-bottom: 20px;
+}
+.container form .roles {
+  margin-bottom: 20px;
+}
+.container form .roles ul {
+  list-style: none;
+  padding: 0;
+}
+.container form .roles ul li {
+  padding: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  color: black;
+  border-radius: 5px;
+}
+.container form .roles ul li:nth-child(1) {
+  background-color: blue;
+}
+.container form .roles ul li:nth-child(2) {
+  background-color: green;
+}
+.container form .roles ul li:nth-child(3) {
+  background-color: orange;
+}
+.container form .roles ul li:nth-child(4) {
+  background-color: yellow;
+}
+.container form .roles ul li:nth-child(5) {
+  background-color: red;
+}
+.container form .roles ul input[type="checkbox"] {
+  margin-right: 10px;
+}
+.container form button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+.container form p {
+  text-align: center;
+  margin-top: 10px;
+}
+.container form p a {
+  color: #ff0000;
+  text-decoration: none;
+}
