@@ -72,11 +72,10 @@
 
                 <div class="row">
                     <?php
-                    include './app/ProductController.php'; // Asegúrate de que la ruta sea correcta
+                    include './app/ProductController.php';
                     $productController = new ProductController();
                     $products = $productController->getProducts();
 
-                    // Verifica si hay productos y si la respuesta es válida
                     if (!empty($products) && isset($products['data'])) {
                         foreach ($products['data'] as $product) {
                             echo '<div class="col-md-4">';

@@ -1,8 +1,17 @@
 <?php
+session_start();
+
 if (isset($_GET['slug'])) {
     $productSlug = $_GET['slug'];
 
     function getProductDetails($slug) {
+        if (!isset($_SESSION['user_token'])) {
+            header("Location: login.php");
+            exit();
+        }
+
+        $token = $_SESSION['user_token']; 
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/slug/' . $slug,
@@ -14,7 +23,7 @@ if (isset($_GET['slug'])) {
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer 479|ePw5vwfQe68DHXL9Wh1NFwdcXE54Y38aFxFPpdEk'
+                'Authorization: Bearer ' . $token 
             ),
         ));
 
