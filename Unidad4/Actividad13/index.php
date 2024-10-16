@@ -46,23 +46,23 @@
     <div class="container-fluid">
         <div class="row">
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar vh-100 position-sticky sticky-top">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active text-white" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Orders</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Customers</a>
-                        </li>
-                    </ul>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Customers</a>
+                    </li>
+                </ul>
             </nav>
 
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -85,10 +85,11 @@
                             echo '        <div class="card-body">';
                             echo '            <h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5>';
                             echo '            <p class="card-text">' . htmlspecialchars($product['description']) . '</p>';
-                            echo '            <a href="detail.html" class="btn btn-primary">Go somewhere</a>';
+                            echo '            <a href="detail.php?slug=' . htmlspecialchars($product['slug']) . '" class="btn btn-primary">View Details</a>';
                             echo '        </div>';
                             echo '    </div>';
                             echo '</div>';
+                            
                         }
                     } else {
                         echo '<div class="col-md-12">';
