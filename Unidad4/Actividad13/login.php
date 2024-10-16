@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
     <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
@@ -16,7 +16,7 @@
                 <div class="text-center">
                     <img src="logo.jpg" alt="Logo" class="mb-4">
                     <h2>Login</h2>
-                    <form method="POST" action="app/AuthController.php">
+                    <form method="POST" action="./app/AuthController.php">
                         <input type="hidden" name="action" value="access">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
@@ -36,6 +36,6 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-FT3Aj4Be9XYKoyy2wi5c+4p9cbUw4N4iYeK8fKtOTxkUt6B8hIdP1T0GhBD0gEV2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

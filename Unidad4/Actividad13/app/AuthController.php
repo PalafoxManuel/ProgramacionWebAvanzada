@@ -1,26 +1,17 @@
-<?php 
+<?php
 session_start();
 
-
 if (isset($_SESSION['user_id'])) {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    var_dump($_POST); 
-
-    if (isset($_POST['action'])) {
-        switch ($_POST['action']) {
-            case 'access':
-                $authController = new AuthController();
-
-                $email = strip_tags($_POST['email']);
-                $password = strip_tags($_POST['password']);
-                $authController->login($email, $password);
-                break;
-        }
+    if (isset($_POST['action']) && $_POST['action'] === 'access') {
+        $authController = new AuthController();
+        $email = strip_tags($_POST['email']);
+        $password = strip_tags($_POST['password']);
+        $authController->login($email, $password);
     }
 }
 
@@ -43,15 +34,29 @@ class AuthController
         ));
 
         $response = curl_exec($curl);
+        
+        if ($response === false) {
+            $_SESSION['login_error'] = "Error en la conexión: " . curl_error($curl);
+            header("Location: ../login.php");
+            exit();
+        }
 
         curl_close($curl);
         
         $responseData = json_decode($response, true);
-        if (isset($responseData['success']) && $responseData['success'] == true) {
+
+        if (isset($responseData['code']) && $responseData['code'] == 2) {
             $_SESSION['user_id'] = $responseData['data']['id'];
-            echo "Login exitoso. Bienvenido, " . htmlspecialchars($email) . "!";
+            $_SESSION['user_name'] = $responseData['data']['name'];
+            $_SESSION['user_data'] = $responseData['data'];
+
+            header("Location: ../index.php");
+            exit();
         } else {
-            echo "Credenciales incorrectas. Inténtalo de nuevo.";
+            $_SESSION['login_error'] = "Credenciales incorrectas. Inténtalo de nuevo.";
+            unset($_SESSION['user_id'], $_SESSION['user_name'], $_SESSION['user_data']);
+            header("Location: ../login.php");
+            exit();
         }
     }
 }

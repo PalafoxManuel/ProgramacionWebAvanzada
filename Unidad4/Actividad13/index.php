@@ -45,8 +45,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar vh-100">
-                <div class="position-sticky">
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar vh-100 position-sticky sticky-top">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active text-white" href="#">Home</a>
@@ -64,7 +63,6 @@
                             <a class="nav-link text-white" href="#">Customers</a>
                         </li>
                     </ul>
-                </div>
             </nav>
 
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -73,36 +71,31 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <img src="bote1.jfif" class="card-img-top" alt="...">
-                                <h5 class="card-title">Product 1</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="detail.html" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <img src="bote2.jfif" class="card-img-top" alt="...">
-                                <h5 class="card-title">Product 2</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="detail.html" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <img src="bote1.jfif" class="card-img-top" alt="...">
-                                <h5 class="card-title">Product 3</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="detail.html" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                    include './app/ProductController.php'; // Asegúrate de que la ruta sea correcta
+                    $productController = new ProductController();
+                    $products = $productController->getProducts();
+
+                    // Verifica si hay productos y si la respuesta es válida
+                    if (!empty($products) && isset($products['data'])) {
+                        foreach ($products['data'] as $product) {
+                            echo '<div class="col-md-4">';
+                            echo '    <div class="card mb-4 shadow-sm">';
+                            echo '        <img src="' . htmlspecialchars($product['cover']) . '" class="card-img-top" alt="' . htmlspecialchars($product['name']) . '">';
+                            echo '        <div class="card-body">';
+                            echo '            <h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5>';
+                            echo '            <p class="card-text">' . htmlspecialchars($product['description']) . '</p>';
+                            echo '            <a href="detail.html" class="btn btn-primary">Go somewhere</a>';
+                            echo '        </div>';
+                            echo '    </div>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '<div class="col-md-12">';
+                        echo '<div class="alert alert-warning" role="alert">No products available.</div>';
+                        echo '</div>';
+                    }
+                    ?>
                 </div>
             </main>
         </div>
