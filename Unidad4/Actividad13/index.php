@@ -68,7 +68,7 @@
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Products</h1>
-                    <button class="btn btn-success" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#addProductModal">Add Product</button>
                 </div>
 
                 <div class="row">
@@ -86,8 +86,8 @@
                             echo '            <h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5>';
                             echo '            <p class="card-text">' . htmlspecialchars($product['description']) . '</p>';
                             echo '            <a href="detail.php?slug=' . htmlspecialchars($product['slug']) . '" class="btn btn-primary">View Details</a>';
-                            echo '            <button class="btn btn-warning ml-2">Editar</button>';
-                            echo '            <button class="btn btn-danger ml-2">Eliminar</button>';
+                            echo '            <button class="btn btn-warning ml-2">Edit</button>';
+                            echo '            <button class="btn btn-danger ml-2">Delete</button>';
                             echo '        </div>';
                             echo '    </div>';
                             echo '</div>';
@@ -113,29 +113,33 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Password">
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="checkMeOut">
-                            <label class="form-check-label" for="checkMeOut">Check me out</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Submit</button>
+                <form id="createProductForm" method="POST" action="">
+                    <div class="form-group">
+                        <label for="productName">Nombre del Producto</label>
+                        <input type="text" class="form-control" id="productName" name="name" placeholder="Nombre del Producto" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productSlug">Slug</label>
+                        <input type="text" class="form-control" id="productSlug" name="slug" placeholder="Slug del Producto" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Descripción</label>
+                        <textarea class="form-control" id="productDescription" name="description" rows="3" placeholder="Descripción del Producto" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productFeatures">Características</label>
+                        <textarea class="form-control" id="productFeatures" name="features" rows="3" placeholder="Características del Producto" required></textarea>
+                    </div>
+                    <input type="hidden" name="action" value="create_product">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Crear producto</button>
+                    </div>
+                </form>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
