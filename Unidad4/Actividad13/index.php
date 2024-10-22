@@ -68,6 +68,7 @@
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Products</h1>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
                 </div>
 
                 <div class="row">
@@ -85,10 +86,11 @@
                             echo '            <h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5>';
                             echo '            <p class="card-text">' . htmlspecialchars($product['description']) . '</p>';
                             echo '            <a href="detail.php?slug=' . htmlspecialchars($product['slug']) . '" class="btn btn-primary">View Details</a>';
+                            echo '            <button class="btn btn-warning ml-2">Editar</button>';
+                            echo '            <button class="btn btn-danger ml-2">Eliminar</button>';
                             echo '        </div>';
                             echo '    </div>';
                             echo '</div>';
-                            
                         }
                     } else {
                         echo '<div class="col-md-12">';
@@ -98,6 +100,39 @@
                     ?>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">Añadir Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="checkMeOut">
+                            <label class="form-check-label" for="checkMeOut">Check me out</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
         </div>
     </div>
 
