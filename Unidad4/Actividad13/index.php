@@ -86,7 +86,7 @@
                             echo '            <h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5>';
                             echo '            <p class="card-text">' . htmlspecialchars($product['description']) . '</p>';
                             echo '            <a href="detail.php?slug=' . htmlspecialchars($product['slug']) . '" class="btn btn-primary">View Details</a>';
-                            echo '            <button class="btn btn-warning ml-2">Edit</button>';
+                            echo '            <button class="btn btn-warning ml-2 edit-product-btn" data-toggle="modal" data-target="#editProductModal" data-id="' . htmlspecialchars($product['id']) . '" data-name="' . htmlspecialchars($product['name']) . '" data-slug="' . htmlspecialchars($product['slug']) . '" data-description="' . htmlspecialchars($product['description']) . '" data-features="' . htmlspecialchars($product['features']) . '">Edit</button>';
                             echo '            <button class="btn btn-danger ml-2">Delete</button>';
                             echo '        </div>';
                             echo '    </div>';
@@ -140,8 +140,74 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProductModalLabel">Editar Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProductForm" method="POST" action="">
+                        <input type="hidden" name="id" id="editProductId">
+                        <div class="form-group">
+                            <label for="editProductName">Nombre del Producto</label>
+                            <input type="text" class="form-control" id="editProductName" name="name" placeholder="Nombre del Producto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editProductSlug">Slug</label>
+                            <input type="text" class="form-control" id="editProductSlug" name="slug" placeholder="Slug del Producto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editProductDescription">Descripción</label>
+                            <textarea class="form-control" id="editProductDescription" name="description" rows="3" placeholder="Descripción del Producto" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editProductFeatures">Características</label>
+                            <textarea class="form-control" id="editProductFeatures" name="features" rows="3" placeholder="Características del Producto" required></textarea>
+                        </div>
+                        <input type="hidden" name="action" value="update_product">
+                        <input type="hidden" name="id" id="productId">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Actualizar producto</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).on('click', '.edit-product-btn', function() {
+            var productId = $(this).data('id');
+            var productName = $(this).data('name');
+            var productSlug = $(this).data('slug');
+            var productDescription = $(this).data('description');
+            var productFeatures = $(this).data('features');
+
+            console.log("Edit button clicked", {
+                productId: productId,
+                productName: productName,
+                productSlug: productSlug,
+                productDescription: productDescription,
+                productFeatures: productFeatures
+            });
+
+            // Asignar los valores a los campos del formulario del modal
+            $('#editProductId').val(productId);
+            $('#editProductName').val(productName);
+            $('#editProductSlug').val(productSlug);
+            $('#editProductDescription').val(productDescription);
+            $('#editProductFeatures').val(productFeatures);
+        });
+    </script>
+
 </body>
 </html>
