@@ -74,6 +74,7 @@
                 <div class="row">
                     <?php
                     include './app/ProductController.php';
+                    //include './app/BrandController.php.php';
                     $productController = new ProductController();
                     $products = $productController->getProducts();
 
@@ -87,7 +88,11 @@
                             echo '            <p class="card-text">' . htmlspecialchars($product['description']) . '</p>';
                             echo '            <a href="detail.php?slug=' . htmlspecialchars($product['slug']) . '" class="btn btn-primary">View Details</a>';
                             echo '            <button class="btn btn-warning ml-2 edit-product-btn" data-toggle="modal" data-target="#editProductModal" data-id="' . htmlspecialchars($product['id']) . '" data-name="' . htmlspecialchars($product['name']) . '" data-slug="' . htmlspecialchars($product['slug']) . '" data-description="' . htmlspecialchars($product['description']) . '" data-features="' . htmlspecialchars($product['features']) . '">Edit</button>';
-                            echo '            <button class="btn btn-danger ml-2">Delete</button>';
+                            echo '<form method="POST" action="index.php" style="display:inline;" class="delete-product-form">';
+                            echo '    <input type="hidden" name="id" value="' . htmlspecialchars($product['id']) . '">';
+                            echo '    <input type="hidden" name="action" value="delete_product">';
+                            echo '    <button type="button" class="btn btn-danger ml-2 delete-product-btn">Delete</button>';
+                            echo '</form>';
                             echo '        </div>';
                             echo '    </div>';
                             echo '</div>';
@@ -182,6 +187,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
         $(document).on('click', '.edit-product-btn', function() {
@@ -197,6 +203,25 @@
             $('#editProductDescription').val(productDescription);
             $('#editProductFeatures').val(productFeatures);
         });
+
+        $(document).on('click', '.delete-product-btn', function() {
+        var form = $(this).closest('form'); 
+
+        swal({
+            title: "¿Estás seguro?",
+            text: "Una vez eliminado, no podrás recuperar este producto.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            } else {
+                swal("El producto no se ha eliminado.");
+            }
+        });
+    });
     </script>
 
 </body>
