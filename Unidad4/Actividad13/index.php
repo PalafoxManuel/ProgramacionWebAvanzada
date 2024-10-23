@@ -170,7 +170,6 @@
                             <textarea class="form-control" id="editProductFeatures" name="features" rows="3" placeholder="Características del Producto" required></textarea>
                         </div>
                         <input type="hidden" name="action" value="update_product">
-                        <input type="hidden" name="id" id="productId">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Actualizar producto</button>
@@ -192,15 +191,6 @@
             var productDescription = $(this).data('description');
             var productFeatures = $(this).data('features');
 
-            console.log("Edit button clicked", {
-                productId: productId,
-                productName: productName,
-                productSlug: productSlug,
-                productDescription: productDescription,
-                productFeatures: productFeatures
-            });
-
-            // Asignar los valores a los campos del formulario del modal
             $('#editProductId').val(productId);
             $('#editProductName').val(productName);
             $('#editProductSlug').val(productSlug);
