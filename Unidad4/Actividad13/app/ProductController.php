@@ -6,9 +6,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'create_product') {
     $slug = $_POST['slug'];
     $description = $_POST['description'];
     $features = $_POST['features'];
+    $image = $_FILES['image'];
 
     $productController = new ProductController();
-    $response = $productController->createProducts($nombre, $slug, $description, $features);
+    $response = $productController->createProducts($nombre, $slug, $description, $features, $image);
 
     if ($response) {
         header("Location: index.php?success=ok");
@@ -91,13 +92,15 @@ class ProductController {
         return json_decode($response, true);
     }
 
-    public function createProducts($nombre, $slug, $description, $features) {
+    public function createProducts($nombre, $slug, $description, $features, $image) {
         if (!isset($_SESSION['user_token'])) {
             header("Location: login.php");
             exit();
         }
     
         $token = $_SESSION['user_token'];
+
+        $cfile = new CURLFile($image['tmp_name'], $image['type'], $image['name']);
     
         $curl = curl_init();
     
@@ -114,7 +117,8 @@ class ProductController {
                 'name' => $nombre,
                 'slug' => $slug,
                 'description' => $description,
-                'features' => $features
+                'features' => $features,
+                'cover' => $cfile
             ),
             CURLOPT_HTTPHEADER => array(
                 'Authorization: Bearer ' . $token

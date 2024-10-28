@@ -118,7 +118,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                <form id="createProductForm" method="POST" action="">
+                <form id="createProductForm" method="POST" action="" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="productName">Nombre del Producto</label>
                         <input type="text" class="form-control" id="productName" name="name" placeholder="Nombre del Producto" required>
@@ -134,6 +134,10 @@
                     <div class="form-group">
                         <label for="productFeatures">Características</label>
                         <textarea class="form-control" id="productFeatures" name="features" rows="3" placeholder="Características del Producto" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">Imagen del Producto</label>
+                        <input type="file" class="form-control-file" id="productImage" name="image" accept="image/*" required>
                     </div>
                     <input type="hidden" name="action" value="create_product">
                     <div class="modal-footer">
