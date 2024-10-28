@@ -1,3 +1,10 @@
+<?php
+require_once './app/ProductController.php';
+
+$productController = new ProductController();
+$brands = $productController->getBrands();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +80,7 @@
 
                 <div class="row">
                     <?php
-                    include './app/ProductController.php';
+                    require_once './app/ProductController.php';
                     //include './app/BrandController.php.php';
                     $productController = new ProductController();
                     $products = $productController->getProducts();
@@ -139,6 +146,12 @@
                         <label for="productImage">Imagen del Producto</label>
                         <input type="file" class="form-control-file" id="productImage" name="image" accept="image/*" required>
                     </div>
+                    <label for="productBrand">Marca</label>
+                    <select class="form-control" id="productBrand" name="brand_id" required>
+                        <?php foreach ($brands as $brand): ?>
+                            <option value="<?= htmlspecialchars($brand['id']) ?>"><?= htmlspecialchars($brand['name']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
                     <input type="hidden" name="action" value="create_product">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -178,6 +191,12 @@
                             <label for="editProductFeatures">Características</label>
                             <textarea class="form-control" id="editProductFeatures" name="features" rows="3" placeholder="Características del Producto" required></textarea>
                         </div>
+                        <label for="editProductBrand">Marca</label>
+                        <select class="form-control" id="editProductBrand" name="brand_id" required>
+                            <?php foreach ($brands as $brand): ?>
+                                <option value="<?= htmlspecialchars($brand['id']) ?>"><?= htmlspecialchars($brand['name']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <input type="hidden" name="action" value="update_product">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -200,12 +219,14 @@
             var productSlug = $(this).data('slug');
             var productDescription = $(this).data('description');
             var productFeatures = $(this).data('features');
+            var productBrandId = $(this).data('brand-id');
 
             $('#editProductId').val(productId);
             $('#editProductName').val(productName);
             $('#editProductSlug').val(productSlug);
             $('#editProductDescription').val(productDescription);
             $('#editProductFeatures').val(productFeatures);
+            $('#editProductBrand').val(productBrandId);
         });
 
         $(document).on('click', '.delete-product-btn', function() {
