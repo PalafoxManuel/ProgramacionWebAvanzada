@@ -12,10 +12,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'create_product') {
     $response = $productController->createProducts($nombre, $slug, $description, $features, $image);
 
     if ($response) {
-        header("Location: index.php?success=ok");
+        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?success=ok");
         exit();
     } else {
-        header("Location: index.php?error=error");
+        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?error=error");
         exit();
     }
 }
@@ -31,10 +31,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'update_product') {
     $response = $productController->updateProduct($id, $name, $slug, $description, $features);
 
     if ($response) {
-        header("Location: index.php?success=ok");
+        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?success=ok");
         exit();
     } else {
-        header("Location: index.php?error=error");
+        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?error=error");
         exit();
     }
 }
@@ -46,20 +46,18 @@ if (isset($_POST['action']) && $_POST['action'] === 'delete_product') {
     $response = $productController->deleteProduct($id);
 
     if ($response) {
-        header("Location: index.php?success=ok");
+        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?success=ok");
         exit();
     } else {
-        header("Location: index.php?error=error");
+        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?error=error");
         exit();
     }
 }
 
-
-
 class ProductController {
     public function getProducts() {
         if (!isset($_SESSION['user_token'])) {
-            header("Location: login.php");
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
 
@@ -94,7 +92,7 @@ class ProductController {
 
     public function createProducts($nombre, $slug, $description, $features, $image) {
         if (!isset($_SESSION['user_token'])) {
-            header("Location: login.php");
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
     
@@ -130,7 +128,6 @@ class ProductController {
 
         $decodedResponse = json_decode($response, true);
 
-
         if (isset($decodedResponse['code']) && $decodedResponse['code'] === 4) {
             return true;
         }
@@ -140,7 +137,7 @@ class ProductController {
 
     public function updateProduct($id, $name, $slug, $description, $features) {
         if (!isset($_SESSION['user_token'])) {
-            header("Location: login.php");
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
 
@@ -180,7 +177,7 @@ class ProductController {
 
     public function deleteProduct($id) {
         if (!isset($_SESSION['user_token'])) {
-            header("Location: login.php");
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
     
@@ -212,7 +209,7 @@ class ProductController {
        
     public function getBrands() {
         if (!isset($_SESSION['user_token'])) {
-            header("Location: login.php");
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
     

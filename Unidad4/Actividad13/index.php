@@ -23,7 +23,7 @@ $brands = $productController->getBrands();
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/ProgramacionWebAvanzada/Unidad4/Actividad13/home">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
@@ -55,7 +55,7 @@ $brands = $productController->getBrands();
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar vh-100 position-sticky sticky-top">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active text-white" href="#">Home</a>
+                        <a class="nav-link active text-white" href="/ProgramacionWebAvanzada/Unidad4/Actividad13/home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">Dashboard</a>
@@ -81,7 +81,6 @@ $brands = $productController->getBrands();
                 <div class="row">
                     <?php
                     require_once './app/ProductController.php';
-                    //include './app/BrandController.php.php';
                     $productController = new ProductController();
                     $products = $productController->getProducts();
 
@@ -93,9 +92,9 @@ $brands = $productController->getBrands();
                             echo '        <div class="card-body">';
                             echo '            <h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5>';
                             echo '            <p class="card-text">' . htmlspecialchars($product['description']) . '</p>';
-                            echo '            <a href="detail.php?slug=' . htmlspecialchars($product['slug']) . '" class="btn btn-primary">View Details</a>';
+                            echo '            <a href="/ProgramacionWebAvanzada/Unidad4/Actividad13/detail/' . htmlspecialchars($product['slug']) . '/" class="btn btn-primary">View Details</a>';
                             echo '            <button class="btn btn-warning ml-2 edit-product-btn" data-toggle="modal" data-target="#editProductModal" data-id="' . htmlspecialchars($product['id']) . '" data-name="' . htmlspecialchars($product['name']) . '" data-slug="' . htmlspecialchars($product['slug']) . '" data-description="' . htmlspecialchars($product['description']) . '" data-features="' . htmlspecialchars($product['features']) . '">Edit</button>';
-                            echo '<form method="POST" action="index.php" style="display:inline;" class="delete-product-form">';
+                            echo '<form method="POST" action="/ProgramacionWebAvanzada/Unidad4/Actividad13/home" style="display:inline;" class="delete-product-form">';
                             echo '    <input type="hidden" name="id" value="' . htmlspecialchars($product['id']) . '">';
                             echo '    <input type="hidden" name="action" value="delete_product">';
                             echo '    <button type="button" class="btn btn-danger ml-2 delete-product-btn">Delete</button>';

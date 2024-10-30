@@ -1,0 +1,24 @@
+RewriteEngine On
+RewriteBase /ProgramacionWebAvanzada/Unidad4/Actividad13/
+
+# Ocultar extensiones .php en las URLs
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^/]+)$ $1.php [L,QSA]
+
+# Reescribir /home a index.php
+RewriteRule ^home/?$ index.php [L]
+
+# Reescribir /login a login.php
+RewriteRule ^login/?$ login.php [L]
+
+# Reescribir /detail/slug a detail.php?slug=slug
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^detail/([^/]+)/?$ detail.php?slug=$1 [L,QSA]
+
+# Reescribir /auth a app/AuthController.php
+RewriteRule ^auth/?$ app/AuthController.php [L]
+
+# Reescribir /resources a app/ProductController.php
+RewriteRule ^resources/?$ app/ProductController.php [L]

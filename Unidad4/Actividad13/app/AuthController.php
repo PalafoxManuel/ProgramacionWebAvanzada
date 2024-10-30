@@ -31,7 +31,7 @@ class AuthController {
         
         if ($response === false) {
             $_SESSION['login_error'] = "Error en la conexión: " . curl_error($curl);
-            header("Location: ../login.php");
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
 
@@ -45,12 +45,12 @@ class AuthController {
             $_SESSION['user_token'] = $responseData['data']['token'];
             $_SESSION['user_data'] = $responseData['data'];
 
-            header("Location: ../index.php");
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home");
             exit();
         } else {
             $_SESSION['login_error'] = "Credenciales incorrectas. Inténtalo de nuevo.";
             unset($_SESSION['user_id'], $_SESSION['user_name'], $_SESSION['user_token'], $_SESSION['user_data']);
-            header("Location: ../login.php");
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
     }

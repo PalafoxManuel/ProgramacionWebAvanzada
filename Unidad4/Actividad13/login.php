@@ -16,7 +16,7 @@
                 <div class="text-center">
                     <img src="logo.jpg" alt="Logo" class="mb-4">
                     <h2>Login</h2>
-                    <form method="POST" action="./app/AuthController.php">
+                    <form method="POST" action="/ProgramacionWebAvanzada/Unidad4/Actividad13/auth">
                         <input type="hidden" name="action" value="access">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
