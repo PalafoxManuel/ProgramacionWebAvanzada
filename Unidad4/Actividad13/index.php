@@ -96,6 +96,7 @@ $brands = $productController->getBrands();
                             echo '            <button class="btn btn-warning ml-2 edit-product-btn" data-toggle="modal" data-target="#editProductModal" data-id="' . htmlspecialchars($product['id']) . '" data-name="' . htmlspecialchars($product['name']) . '" data-slug="' . htmlspecialchars($product['slug']) . '" data-description="' . htmlspecialchars($product['description']) . '" data-features="' . htmlspecialchars($product['features']) . '">Edit</button>';
                             echo '<form method="POST" action="/ProgramacionWebAvanzada/Unidad4/Actividad13/home" style="display:inline;" class="delete-product-form">';
                             echo '    <input type="hidden" name="id" value="' . htmlspecialchars($product['id']) . '">';
+                            echo '    <input type="hidden" name="global_token" value="' . htmlspecialchars($_SESSION['global_token']) . '">';
                             echo '    <input type="hidden" name="action" value="delete_product">';
                             echo '    <button type="button" class="btn btn-danger ml-2 delete-product-btn">Delete</button>';
                             echo '</form>';
@@ -125,6 +126,7 @@ $brands = $productController->getBrands();
                 </div>
                 <div class="modal-body">
                 <form id="createProductForm" method="POST" action="" enctype="multipart/form-data">
+                    <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($_SESSION['global_token']); ?>">
                     <div class="form-group">
                         <label for="productName">Nombre del Producto</label>
                         <input type="text" class="form-control" id="productName" name="name" placeholder="Nombre del Producto" required>
@@ -173,6 +175,7 @@ $brands = $productController->getBrands();
                 </div>
                 <div class="modal-body">
                     <form id="editProductForm" method="POST" action="">
+                        <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($_SESSION['global_token']); ?>">
                         <input type="hidden" name="id" id="editProductId">
                         <div class="form-group">
                             <label for="editProductName">Nombre del Producto</label>

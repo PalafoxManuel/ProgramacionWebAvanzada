@@ -1,12 +1,21 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['action']) && $_POST['action'] === 'access') {
+    if (
+        isset($_POST['action']) && 
+        $_POST['action'] === 'access' && 
+        isset($_POST['global_token'], $_SESSION['global_token']) && 
+        $_POST['global_token'] === $_SESSION['global_token']
+    ) {
         $authController = new AuthController();
         $email = strip_tags($_POST['email']);
         $password = strip_tags($_POST['password']);
         $authController->login($email, $password);
+    } else {
+        die('Solicitud no válida: Token de seguridad no coincide.');
     }
 }
 
@@ -31,6 +40,7 @@ class AuthController {
         
         if ($response === false) {
             $_SESSION['login_error'] = "Error en la conexión: " . curl_error($curl);
+            curl_close($curl);
             header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }

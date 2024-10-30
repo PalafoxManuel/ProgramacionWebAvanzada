@@ -1,56 +1,62 @@
 <?php
 session_start();
 
-if (isset($_POST['action']) && $_POST['action'] === 'create_product') {
-    $nombre = $_POST['name'];
-    $slug = $_POST['slug'];
-    $description = $_POST['description'];
-    $features = $_POST['features'];
-    $image = $_FILES['image'];
-
-    $productController = new ProductController();
-    $response = $productController->createProducts($nombre, $slug, $description, $features, $image);
-
-    if ($response) {
-        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?success=ok");
-        exit();
-    } else {
-        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?error=error");
-        exit();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['global_token']) || $_POST['global_token'] !== $_SESSION['global_token']) {
+        die('Solicitud no válida: Token de seguridad no coincide.');
     }
-}
 
-if (isset($_POST['action']) && $_POST['action'] === 'update_product') {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $slug = $_POST['slug'];
-    $description = $_POST['description'];
-    $features = $_POST['features'];
+    if (isset($_POST['action']) && $_POST['action'] === 'create_product') {
+        $nombre = $_POST['name'];
+        $slug = $_POST['slug'];
+        $description = $_POST['description'];
+        $features = $_POST['features'];
+        $image = $_FILES['image'];
 
-    $productController = new ProductController();
-    $response = $productController->updateProduct($id, $name, $slug, $description, $features);
+        $productController = new ProductController();
+        $response = $productController->createProducts($nombre, $slug, $description, $features, $image);
 
-    if ($response) {
-        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?success=ok");
-        exit();
-    } else {
-        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?error=error");
-        exit();
+        if ($response) {
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?success=ok");
+            exit();
+        } else {
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?error=error");
+            exit();
+        }
     }
-}
 
-if (isset($_POST['action']) && $_POST['action'] === 'delete_product') {
-    $id = $_POST['id'];
+    if (isset($_POST['action']) && $_POST['action'] === 'update_product') {
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $slug = $_POST['slug'];
+        $description = $_POST['description'];
+        $features = $_POST['features'];
 
-    $productController = new ProductController();
-    $response = $productController->deleteProduct($id);
+        $productController = new ProductController();
+        $response = $productController->updateProduct($id, $name, $slug, $description, $features);
 
-    if ($response) {
-        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?success=ok");
-        exit();
-    } else {
-        header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?error=error");
-        exit();
+        if ($response) {
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?success=ok");
+            exit();
+        } else {
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?error=error");
+            exit();
+        }
+    }
+
+    if (isset($_POST['action']) && $_POST['action'] === 'delete_product') {
+        $id = $_POST['id'];
+
+        $productController = new ProductController();
+        $response = $productController->deleteProduct($id);
+
+        if ($response) {
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?success=ok");
+            exit();
+        } else {
+            header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/home?error=error");
+            exit();
+        }
     }
 }
 
@@ -80,13 +86,13 @@ class ProductController {
         ));
 
         $response = curl_exec($curl);
-        
+
         if ($response === false) {
             return [];
         }
 
         curl_close($curl);
-        
+
         return json_decode($response, true);
     }
 
@@ -95,13 +101,13 @@ class ProductController {
             header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
-    
+
         $token = $_SESSION['user_token'];
 
         $cfile = new CURLFile($image['tmp_name'], $image['type'], $image['name']);
-    
+
         $curl = curl_init();
-    
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
             CURLOPT_RETURNTRANSFER => true,
@@ -180,11 +186,11 @@ class ProductController {
             header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
-    
+
         $token = $_SESSION['user_token'];
-    
+
         $curl = curl_init();
-    
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/' . $id,
             CURLOPT_RETURNTRANSFER => true,
@@ -198,25 +204,25 @@ class ProductController {
                 'Authorization: Bearer ' . $token
             ),
         ));
-    
+
         $response = curl_exec($curl);
         curl_close($curl);
-    
+
         $decodedResponse = json_decode($response, true);
-    
+
         return isset($decodedResponse['code']) && $decodedResponse['code'] === 2;
-    } 
-       
+    }
+
     public function getBrands() {
         if (!isset($_SESSION['user_token'])) {
             header("Location: /ProgramacionWebAvanzada/Unidad4/Actividad13/login");
             exit();
         }
-    
+
         $token = $_SESSION['user_token'];
-    
+
         $curl = curl_init();
-    
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/brands',
             CURLOPT_RETURNTRANSFER => true,
@@ -230,12 +236,12 @@ class ProductController {
                 'Authorization: Bearer ' . $token
             ),
         ));
-    
+
         $response = curl_exec($curl);
         curl_close($curl);
-    
+
         $decodedResponse = json_decode($response, true);
-    
+
         return isset($decodedResponse['data']) ? $decodedResponse['data'] : [];
     }
 }

@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['global_token'])) {
+    $_SESSION['global_token'] = bin2hex(random_bytes(32));
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +25,7 @@
                     <img src="logo.jpg" alt="Logo" class="mb-4">
                     <h2>Login</h2>
                     <form method="POST" action="/ProgramacionWebAvanzada/Unidad4/Actividad13/auth">
+                        <input type="hidden" name="global_token" value="<?php echo htmlspecialchars($_SESSION['global_token']); ?>">
                         <input type="hidden" name="action" value="access">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
@@ -25,10 +34,6 @@
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password" required>
-                        </div>
-                        <div class="form-check mb-4">
-                            <input type="checkbox" class="form-check-input" id="checkMeOut">
-                            <label class="form-check-label" for="checkMeOut">Check me out</label>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
