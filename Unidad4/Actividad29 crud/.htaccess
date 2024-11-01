@@ -1,0 +1,16 @@
+Options +FollowSymLinks -MultiViews -Indexes
+RewriteEngine on
+
+
+#páginas
+RewriteRule ^login?$ index.php
+RewriteRule ^home/?$ views/home.php
+RewriteRule ^products/?$ views/products/index.php
+RewriteRule ^products/create/?$ views/products/create.php
+RewriteRule ^products/([^/]+)/?$ views/products/details.php
+
+
+
+#controladores
+RewriteRule ^auth?$ app/AuthController.php
+RewriteRule ^products?$ app/ProductController.php
