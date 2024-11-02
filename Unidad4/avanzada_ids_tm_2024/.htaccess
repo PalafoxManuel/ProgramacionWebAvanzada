@@ -1,6 +1,9 @@
 Options +FollowSymLinks -MultiViews -Indexes
 RewriteEngine on
 
+# Evitar redirecciones si el archivo o carpeta existe
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
 #páginas
 RewriteRule ^login?$ index.php
