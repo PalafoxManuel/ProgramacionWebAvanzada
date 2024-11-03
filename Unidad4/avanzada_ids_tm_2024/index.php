@@ -5,6 +5,12 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Verificar si el usuario ya está autenticado
+if (isset($_SESSION['user_id'])) {
+    header("Location: " . BASE_PATH . "views/home.php");
+    exit();
+}
+
 // Generar token de seguridad si no existe
 if (!isset($_SESSION['global_token'])) {
     $_SESSION['global_token'] = bin2hex(random_bytes(32));

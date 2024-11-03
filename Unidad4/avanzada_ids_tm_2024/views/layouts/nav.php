@@ -480,18 +480,21 @@
               </li>
               <li class="list-group-item">
                 <a href="#" class="dropdown-item">
-                  <span class="d-flex align-items-center">
-                    <i class="ph-duotone ph-plus-circle"></i>
-                    <span>Add account</span>
-                  </span>
+                    <span class="d-flex align-items-center">
+                        <i class="ph-duotone ph-plus-circle"></i>
+                        <span>Add account</span>
+                    </span>
                 </a>
-                <a href="#" class="dropdown-item">
-                  <span class="d-flex align-items-center">
-                    <i class="ph-duotone ph-power"></i>
-                    <span>Logout</span>
-                  </span>
-                </a>
-              </li>
+                <form action="<?= BASE_PATH ?>app/AuthController.php" method="POST" style="display:inline;">
+                    <input type="hidden" name="action" value="logout">
+                    <button type="submit" class="dropdown-item" style="border:none; background:none; cursor:pointer;">
+                        <span class="d-flex align-items-center">
+                            <i class="ph-duotone ph-sign-out"></i>
+                            <span>Logout</span>
+                        </span>
+                    </button>
+                </form>
+            </li>
             </ul>
           </div>
         </div>

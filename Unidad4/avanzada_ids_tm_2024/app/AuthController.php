@@ -6,19 +6,28 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_POST['action']) && $_POST['action'] === 'access') {
-    if (isset($_POST['global_token'], $_SESSION['global_token']) && $_POST['global_token'] === $_SESSION['global_token']) {
-        $authController = new AuthController();
-        $email = strip_tags($_POST['email']);
-        $password = strip_tags($_POST['password']);
-        $authController->login($email, $password);
-    } else {
-        die('Solicitud no válida: Token de seguridad no coincide.');
+if (isset($_POST['action'])) {
+    $authController = new AuthController();
+    
+    switch ($_POST['action']) {
+        case 'access':
+            if (isset($_POST['global_token'], $_SESSION['global_token']) && $_POST['global_token'] === $_SESSION['global_token']) {
+                $email = strip_tags($_POST['email']);
+                $password = strip_tags($_POST['password']);
+                $authController->login($email, $password);
+            } else {
+                die('Solicitud no válida: Token de seguridad no coincide.');
+            }
+            break;
+        case 'logout':
+            $authController->logout();
+            break;
+        default:
+            die('Acción no válida.');
     }
 }
 
 class AuthController {
-
     public function login($email = null, $password = null) {
         $curl = curl_init();
 
@@ -43,13 +52,10 @@ class AuthController {
         $response = json_decode($response);
 
         if (isset($response->data->name)) {
-            // Guardar la información de usuario en sesión
             $_SESSION['user_data'] = $response->data;
             $_SESSION['user_id'] = $response->data->id;
-
-            // Redirigir a la página de inicio
             header('Location: ' . BASE_PATH . 'views/home.php');
-			exit();
+            exit();
         } else {
             $_SESSION['login_error'] = "Credenciales incorrectas. Inténtalo de nuevo.";
             header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -57,13 +63,13 @@ class AuthController {
         }
     }
 
-	public function logout() {
+    public function logout() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        session_unset(); // Limpia todas las variables de sesión
-        session_destroy(); // Destruye la sesión
-        header("Location: " . BASE_PATH . "index.php"); // Redirige a la página de login o inicio
+        session_unset();
+        session_destroy();
+        header("Location: " . BASE_PATH . "index.php");
         exit();
     }
 }
