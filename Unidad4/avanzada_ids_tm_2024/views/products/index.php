@@ -2,8 +2,8 @@
 include_once "../../app/config.php";
 include_once "../../app/ProductController.php";
 
-$producController = new ProducController();
-$products = $producController->get();
+$productController = new ProductController();
+$products = $productController->get();
 
 ?>
 <!doctype html>
