@@ -79,9 +79,9 @@ $products = $productController->get();
                           </div>
                           <div class="d-flex">
                             <div class="flex-shrink-0">
-                              <a href="#" class="avtar avtar-s btn-link-secondary btn-prod-card" data-bs-toggle="offcanvas" data-bs-target="#productOffcanvas">
-                                <i class="ph-duotone ph-eye f-18"></i>
-                              </a>
+                            <a href="details.php?slug=<?= $product->slug ?>" class="avtar avtar-s btn-link-secondary btn-prod-card">
+                              <i class="ph-duotone ph-eye f-18"></i>
+                            </a>
                             </div>
                             <div class="flex-grow-1 ms-3">
                               <div class="d-grid">

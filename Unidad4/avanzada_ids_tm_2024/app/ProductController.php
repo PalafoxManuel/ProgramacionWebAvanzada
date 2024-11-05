@@ -36,6 +36,18 @@ if (isset($_POST['action'])) {
             $productController = new ProductController();
             $productController->remove($productId);
             break;
+
+        case 'update_product':
+            $productId = $_POST['product_id'];
+            $name = $_POST['name'];
+            $slug = $_POST['slug'];
+            $description = $_POST['description'];
+            $features = $_POST['features'];
+            $cover = isset($_FILES['cover']) && $_FILES['cover']['error'] === 0 ? $_FILES['cover'] : null;
+                
+            $productController = new ProductController();
+            $productController->update($productId, $name, $slug, $description, $features, $cover);
+            break;
     }
 }
 
@@ -209,43 +221,86 @@ class ProductController
         return $data->data ?? [];
     }
 
-	public function update($nombre,$slug,$description,$features,$product_id)
-	{
-		$curl = curl_init();
+	public function update($product_id, $name, $slug, $description, $features, $cover = null)
+    {
+        $curl = curl_init();
 
-		curl_setopt_array($curl, array(
-		  CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
-		  CURLOPT_RETURNTRANSFER => true,
-		  CURLOPT_ENCODING => '',
-		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 0,
-		  CURLOPT_FOLLOWLOCATION => true,
-		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		  CURLOPT_CUSTOMREQUEST => 'PUT',
-		  CURLOPT_POSTFIELDS => 'name='.$nombre.'&slug='.$slug.'&description='.$description.'&features='.$features.'&id='.$product_id,
-		  CURLOPT_HTTPHEADER => array(
-		    'Content-Type: application/x-www-form-urlencoded',
-		    'Authorization: Bearer '.$_SESSION['user_data']->token
-		  ),
-		));
+        // Definir la URL
+        $url = 'https://crud.jonathansoto.mx/api/products';
 
-		
+        // Armar el cuerpo de la solicitud como un arreglo si es multipart/form-data
+        if ($cover && is_uploaded_file($cover['tmp_name'])) {
+            $postData = [
+                'id' => $product_id,
+                'name' => $name,
+                'slug' => $slug,
+                'description' => $description,
+                'features' => $features,
+                'cover' => new CURLFile($cover['tmp_name'], $cover['type'], $cover['name']),
+            ];
+            $headers = [
+                'Authorization: Bearer ' . $_SESSION['user_data']->token,
+                'Content-Type: multipart/form-data',
+            ];
+        } else {
+            // Si no hay imagen, armar el cuerpo como cadena
+            $postData = http_build_query([
+                'id' => $product_id,
+                'name' => $name,
+                'slug' => $slug,
+                'description' => $description,
+                'features' => $features,
+            ]);
+            $headers = [
+                'Authorization: Bearer ' . $_SESSION['user_data']->token,
+                'Content-Type: application/x-www-form-urlencoded',
+            ];
+        }
 
-		$response = curl_exec($curl); 
-		curl_close($curl);
-		$response = json_decode($response);
+        // Configuración de cURL
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => $postData,
+            CURLOPT_HTTPHEADER => $headers,
+        ]);
 
-		#echo json_encode($response);
+        // Ejecutar la solicitud
+        $response = curl_exec($curl);
+        $curlInfo = curl_getinfo($curl);
+        $httpCode = $curlInfo['http_code'];
 
-		if (isset($response->code) && $response->code == 4) {
-			
-			header('Location: ../home.php?status=ok');
-		}else{
-			header('Location: ../home.php?status=error');
-		}
+        // Depuración en caso de error
+        if ($response === false || $httpCode !== 200) {
+            $errorMsg = curl_error($curl) ?: 'Error en el servidor';
+            curl_close($curl);
 
-		
-	}
+            // Imprimir información de depuración
+            echo "<pre>Debug Info:\n";
+            echo "URL: " . $curlInfo['url'] . "\n";
+            echo "HTTP Code: " . $httpCode . "\n";
+            echo "Request Headers: " . print_r($headers, true) . "\n";
+            echo "Request Body: " . print_r($postData, true) . "\n";
+            echo "Error Message: " . $errorMsg . "\n";
+            echo "Response: " . $response . "\n";
+            echo "</pre>";
+            exit;
+        }
+
+        curl_close($curl);
+        $responseData = json_decode($response, true);
+
+        // Redirigir según la respuesta de la API
+        if (isset($responseData['code']) && $responseData['code'] == 4) {
+            header('Location: ' . BASE_PATH . '/views/products/index.php?status=ok');
+        } else {
+            $errorMsg = isset($responseData['message']) ? $responseData['message'] : 'Error desconocido en la API';
+            header('Location: ' . BASE_PATH . '/views/products/index.php?status=error&msg=' . urlencode($errorMsg));
+        }
+    }
+
+
 
 	public function remove($product_id)
 	{
