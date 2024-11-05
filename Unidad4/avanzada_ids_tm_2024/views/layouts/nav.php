@@ -160,10 +160,14 @@
           <i class="ph-duotone ph-lock-key"></i>
           <span>Lock Screen</span>
         </a>
-        <a href="#!" class="dropdown-item">
-          <i class="ph-duotone ph-power"></i>
-          <span>Logout</span>
-        </a>
+        <form action="<?= BASE_PATH ?>app/AuthController.php" method="POST" style="display:inline;">
+          <input type="hidden" name="action" value="logout">
+            <button type="submit" class="dropdown-item" style="border:none; background:none; cursor:pointer;">
+              <span class="d-flex align-items-center">
+                <i class="ph-duotone ph-sign-out"></i>
+                  <span>Logout</span>
+            </button>
+        </form>
       </div>
     </li>
     <li class="dropdown pc-h-item">

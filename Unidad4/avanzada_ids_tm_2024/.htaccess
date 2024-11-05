@@ -6,6 +6,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Páginas y vistas
+RewriteRule ^login$ index.php [L]
 RewriteRule ^home$ views/home.php [L]
 RewriteRule ^products$ views/products/index.php [L]
 RewriteRule ^products/create$ views/products/create.php [L]
