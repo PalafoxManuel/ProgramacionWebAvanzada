@@ -1,22 +1,18 @@
 <?php 
-// Configuración e inicialización de sesión
 include_once "app/config.php";
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verificar si el usuario ya está autenticado
 if (isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_PATH . "views/home.php");
+    header("Location: " . BASE_PATH . "home");
     exit();
 }
 
-// Generar token de seguridad si no existe
 if (!isset($_SESSION['global_token'])) {
     $_SESSION['global_token'] = bin2hex(random_bytes(32));
 }
 
-// Lógica de autenticación
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include_once "app/AuthController.php";
     $authController = new AuthController();
@@ -70,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="col-auto my-1">
                             <ul class="list-inline footer-link mb-0">
-                                <li class="list-inline-item"><a href="../index.html">Home</a></li>
+                                <li class="list-inline-item"><a href="<?= BASE_PATH ?>index.html">Home</a></li>
                                 <li class="list-inline-item"><a href="https://pcoded.gitbook.io/light-able/" target="_blank">Documentation</a></li>
                                 <li class="list-inline-item"><a href="https://phoenixcoded.support-hub.io/" target="_blank">Support</a></li>
                             </ul>
@@ -84,9 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="card my-5 mx-3">
                     <div class="card-body">
                         <h4 class="f-w-500 mb-1">Login with your email</h4>
-                        <p class="mb-3">Don't have an Account? <a href="register-v2.html" class="link-primary ms-1">Create Account</a></p>
+                        <p class="mb-3">Don't have an Account? <a href="<?= BASE_PATH ?>register-v2" class="link-primary ms-1">Create Account</a></p>
                         
-                        <form method="POST" action="index.php">
+                        <form method="POST" action="<?= BASE_PATH ?>login">
                             <div class="mb-3">
                                 <input type="email" name="email" class="form-control" id="floatingInput" placeholder="Email Address" required />
                             </div>
@@ -103,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <input class="form-check-input input-primary" type="checkbox" id="customCheckc1" checked />
                                     <label class="form-check-label text-muted" for="customCheckc1">Remember me?</label>
                                 </div>
-                                <a href="forgot-password-v2.html">
+                                <a href="<?= BASE_PATH ?>forgot-password-v2">
                                     <h6 class="text-secondary f-w-400 mb-0">Forgot Password?</h6>
                                 </a>
                             </div>

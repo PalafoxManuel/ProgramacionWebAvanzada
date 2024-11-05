@@ -28,7 +28,7 @@ $tags = $productController->getTags();
         </div>
       </div>
 
-      <form action="../../app/ProductController.php" method="POST" enctype="multipart/form-data">
+      <form action="<?= BASE_PATH ?>products" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="action" value="create_product">
         
         <div class="row">

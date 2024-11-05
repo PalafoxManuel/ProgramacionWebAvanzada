@@ -54,11 +54,11 @@ class AuthController {
         if (isset($response->data->name)) {
             $_SESSION['user_data'] = $response->data;
             $_SESSION['user_id'] = $response->data->id;
-            header('Location: ' . BASE_PATH . 'views/home.php');
+            header('Location: ' . BASE_PATH . 'home');
             exit();
         } else {
             $_SESSION['login_error'] = "Credenciales incorrectas. Inténtalo de nuevo.";
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            header('Location: ' . BASE_PATH . 'login');
             exit();
         }
     }
@@ -69,7 +69,7 @@ class AuthController {
         }
         session_unset();
         session_destroy();
-        header("Location: " . BASE_PATH . "index.php");
+        header("Location: " . BASE_PATH . "login"); 
         exit();
     }
 }

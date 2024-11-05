@@ -54,7 +54,7 @@ $products = $productController->get();
                     <div class="col-sm-6 col-xl-4">
                       <div class="card product-card">
                         <div class="card-img-top">
-                          <a href="ecom_product-details.php?slug=<?= $product->slug ?>">
+                          <a href="<?= BASE_PATH ?>products/<?= $product->slug ?>">
                             <img src="<?= $imageUrl ?>" alt="<?= $product->name ?>" class="img-prod img-fluid" />
                           </a>
                           <div class="card-body position-absolute end-0 top-0">
@@ -65,7 +65,7 @@ $products = $productController->get();
                           </div>
                         </div>
                         <div class="card-body">
-                          <a href="ecom_product-details.php?slug=<?= $product->slug ?>">
+                          <a href="<?= BASE_PATH ?>products/<?= $product->slug ?>">
                             <p class="prod-content mb-0 text-muted"><?= $product->name ?></p>
                           </a>
                           <div class="d-flex align-items-center justify-content-between mt-2 mb-3 flex-wrap gap-1">
@@ -79,9 +79,9 @@ $products = $productController->get();
                           </div>
                           <div class="d-flex">
                             <div class="flex-shrink-0">
-                            <a href="details.php?slug=<?= $product->slug ?>" class="avtar avtar-s btn-link-secondary btn-prod-card">
-                              <i class="ph-duotone ph-eye f-18"></i>
-                            </a>
+                              <a href="<?= BASE_PATH ?>products/<?= $product->slug ?>" class="avtar avtar-s btn-link-secondary btn-prod-card">
+                                <i class="ph-duotone ph-eye f-18"></i>
+                              </a>
                             </div>
                             <div class="flex-grow-1 ms-3">
                               <div class="d-grid">

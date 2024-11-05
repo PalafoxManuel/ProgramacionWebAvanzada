@@ -5,15 +5,14 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-#páginas
-RewriteRule ^login?$ index.php
-RewriteRule ^home/?$ views/home.php
-RewriteRule ^products/?$ views/products/index.php
-RewriteRule ^products/create/?$ views/products/create.php
-RewriteRule ^products/([^/]+)/?$ views/products/details.php
+# Páginas y vistas
+RewriteRule ^home$ views/home.php [L]
+RewriteRule ^products$ views/products/index.php [L]
+RewriteRule ^products/create$ views/products/create.php [L]
+RewriteRule ^products/edit$ views/products/edit.php [L]
+RewriteRule ^products/delete$ views/products/delete.php [L]
+RewriteRule ^products/([a-zA-Z0-9_-]+)$ views/products/details.php?slug=$1 [L]
 
-
-
-#controladores
-RewriteRule ^auth?$ app/AuthController.php
-RewriteRule ^products?$ app/ProductController.php
+# Controladores
+RewriteRule ^auth$ app/AuthController.php [L]
+RewriteRule ^products$ app/ProductController.php [L]

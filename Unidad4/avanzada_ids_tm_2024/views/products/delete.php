@@ -105,7 +105,7 @@ $products = $productController->get();
   </div>
 
   <!-- Formulario oculto para enviar la eliminación -->
-  <form id="deleteForm" action="../../app/ProductController.php" method="POST">
+  <form id="deleteForm" action="<?= BASE_PATH ?>products" method="POST">
     <input type="hidden" name="action" value="delete_product">
     <input type="hidden" name="product_id" id="productToDelete">
   </form>

@@ -19,7 +19,6 @@ if (isset($_POST['action'])) {
             $stock = $_POST['stock'];
             $sku = $_POST['sku'];
 
-            // Verificar si el archivo fue subido
             if (isset($_FILES['cover']) && $_FILES['cover']['error'] == 0) {
                 $cover = $_FILES['cover'];
             } else {
@@ -123,16 +122,8 @@ class ProductController
     {
         $curl = curl_init();
         $coverFile = curl_file_create($cover['tmp_name'], $cover['type'], $cover['name']);
-
-        $categoriesFormatted = [];
-        foreach ($categories as $index => $category) {
-            $categoriesFormatted["categories[$index]"] = $category;
-        }
-
-        $tagsFormatted = [];
-        foreach ($tags as $index => $tag) {
-            $tagsFormatted["tags[$index]"] = $tag;
-        }
+        $categoriesFormatted = array_map(fn($category, $index) => ["categories[$index]" => $category], $categories, array_keys($categories));
+        $tagsFormatted = array_map(fn($tag, $index) => ["tags[$index]" => $tag], $tags, array_keys($tags));
 
         $postData = array_merge(
             [
@@ -147,8 +138,8 @@ class ProductController
                 'stock' => $stock,
                 'sku' => $sku
             ],
-            $categoriesFormatted,
-            $tagsFormatted
+            ...$categoriesFormatted,
+            ...$tagsFormatted
         );
 
         curl_setopt_array($curl, array(
@@ -163,22 +154,14 @@ class ProductController
         ));
 
         $response = curl_exec($curl);
-
-        if ($response === false) {
-            $errorMsg = 'cURL Error: ' . curl_error($curl);
-            curl_close($curl);
-            header('Location: ' . BASE_PATH . 'views/products/index.php?status=error&msg=' . urlencode($errorMsg));
-            exit;
-        }
-
         curl_close($curl);
         $response = json_decode($response);
 
         if (isset($response->code) && $response->code == 4) {
-            header('Location: ' . BASE_PATH . 'views/products/index.php?status=ok');
+            header('Location: ' . BASE_PATH . 'products?status=ok');
         } else {
             $errorMsg = $response->message ?? 'Error desconocido';
-            header('Location: ' . BASE_PATH . 'views/products/index.php?status=error&msg=' . urlencode($errorMsg));
+            header('Location: ' . BASE_PATH . 'products?status=error&msg=' . urlencode($errorMsg));
         }
     }
 
@@ -224,11 +207,8 @@ class ProductController
 	public function update($product_id, $name, $slug, $description, $features, $cover = null)
     {
         $curl = curl_init();
-
-        // Definir la URL
         $url = 'https://crud.jonathansoto.mx/api/products';
 
-        // Armar el cuerpo de la solicitud como un arreglo si es multipart/form-data
         if ($cover && is_uploaded_file($cover['tmp_name'])) {
             $postData = [
                 'id' => $product_id,
@@ -243,7 +223,6 @@ class ProductController
                 'Content-Type: multipart/form-data',
             ];
         } else {
-            // Si no hay imagen, armar el cuerpo como cadena
             $postData = http_build_query([
                 'id' => $product_id,
                 'name' => $name,
@@ -257,7 +236,6 @@ class ProductController
             ];
         }
 
-        // Configuración de cURL
         curl_setopt_array($curl, [
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
@@ -266,53 +244,28 @@ class ProductController
             CURLOPT_HTTPHEADER => $headers,
         ]);
 
-        // Ejecutar la solicitud
         $response = curl_exec($curl);
-        $curlInfo = curl_getinfo($curl);
-        $httpCode = $curlInfo['http_code'];
-
-        // Depuración en caso de error
-        if ($response === false || $httpCode !== 200) {
-            $errorMsg = curl_error($curl) ?: 'Error en el servidor';
-            curl_close($curl);
-
-            // Imprimir información de depuración
-            echo "<pre>Debug Info:\n";
-            echo "URL: " . $curlInfo['url'] . "\n";
-            echo "HTTP Code: " . $httpCode . "\n";
-            echo "Request Headers: " . print_r($headers, true) . "\n";
-            echo "Request Body: " . print_r($postData, true) . "\n";
-            echo "Error Message: " . $errorMsg . "\n";
-            echo "Response: " . $response . "\n";
-            echo "</pre>";
-            exit;
-        }
-
         curl_close($curl);
         $responseData = json_decode($response, true);
 
-        // Redirigir según la respuesta de la API
         if (isset($responseData['code']) && $responseData['code'] == 4) {
-            header('Location: ' . BASE_PATH . '/views/products/index.php?status=ok');
+            header('Location: ' . BASE_PATH . 'products?status=ok');
         } else {
-            $errorMsg = isset($responseData['message']) ? $responseData['message'] : 'Error desconocido en la API';
-            header('Location: ' . BASE_PATH . '/views/products/index.php?status=error&msg=' . urlencode($errorMsg));
+            $errorMsg = $responseData['message'] ?? 'Error desconocido en la API';
+            header('Location: ' . BASE_PATH . 'products?status=error&msg=' . urlencode($errorMsg));
         }
     }
 
-
-
 	public function remove($product_id)
-	{
+    {
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/'.$product_id,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => 'DELETE',
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer '.$_SESSION['user_data']->token
-        ),
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/'.$product_id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => 'DELETE',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$_SESSION['user_data']->token
+            ),
         )); 
 
         $response = curl_exec($curl); 
@@ -320,10 +273,10 @@ class ProductController
         $response = json_decode($response);
 
         if (isset($response->code) && $response->code == 2) {
-            header('Location: ' . BASE_PATH . 'views/products/index.php?status=ok');
+            header('Location: ' . BASE_PATH . 'products?status=ok');
         } else {
             $errorMsg = $response->message ?? 'Error desconocido';
-            header('Location: ' . BASE_PATH . 'views/products/index.php?status=error&msg=' . urlencode($errorMsg));
+            header('Location: ' . BASE_PATH . 'products?status=error&msg=' . urlencode($errorMsg));
         }
     }
 

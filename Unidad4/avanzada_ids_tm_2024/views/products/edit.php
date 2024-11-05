@@ -94,7 +94,7 @@ $products = $productController->get();
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="editForm" action="../../app/ProductController.php" method="POST" enctype="multipart/form-data">
+        <form id="editForm" action="<?= BASE_PATH ?>products" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="action" value="update_product">
             <input type="hidden" name="product_id" id="edit_product_id">
 
@@ -142,7 +142,6 @@ $products = $productController->get();
     document.getElementById('edit_description').value = product.description;
     document.getElementById('edit_features').value = product.features;
 
-    // Limpia el campo de imagen para evitar confusión
     document.getElementById('edit_cover').value = "";
   }
 </script>

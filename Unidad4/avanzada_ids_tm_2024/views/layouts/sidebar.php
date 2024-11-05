@@ -2,7 +2,7 @@
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
         <div class="m-header">
-            <a href="index.html" class="b-brand text-primary">
+            <a href="<?= BASE_PATH ?>home" class="b-brand text-primary">
                 <img src="<?= BASE_PATH ?>assets/images/logo-dark.svg" alt="logo image" class="logo-lg" />
                 <span class="badge bg-brand-color-2 rounded-pill ms-2 theme-version">v1.2.0</span>
             </a>
@@ -23,11 +23,11 @@
                         <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
                     </a>
                     <ul class="pc-submenu">
-                        <li class="pc-item"><a class="pc-link" href="index.html">Analytics</a></li>
-                        <li class="pc-item"><a class="pc-link" href="affiliate.html">Affiliate</a></li>
-                        <li class="pc-item"><a class="pc-link" href="finance.html">Finance</a></li>
-                        <li class="pc-item"><a class="pc-link" href="../admins/helpdesk-dashboard.html">Helpdesk</a></li>
-                        <li class="pc-item"><a class="pc-link" href="invoice.html">Invoice</a></li>
+                        <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>analytics">Analytics</a></li>
+                        <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>affiliate">Affiliate</a></li>
+                        <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>finance">Finance</a></li>
+                        <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>helpdesk">Helpdesk</a></li>
+                        <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>invoice">Invoice</a></li>
                     </ul>
                 </li>
 
@@ -37,7 +37,7 @@
                     <i class="ph-duotone ph-storefront"></i>
                 </li>
                 <li class="pc-item">
-                    <a href="<?= BASE_PATH ?>views/products/index.php" class="pc-link">
+                    <a href="<?= BASE_PATH ?>products" class="pc-link">
                         <span class="pc-micon">
                             <i class="ph-duotone ph-box"></i>
                         </span>
@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a href="<?= BASE_PATH ?>views/products/create.php" class="pc-link">
+                    <a href="<?= BASE_PATH ?>products/create" class="pc-link">
                         <span class="pc-micon">
                             <i class="ph-duotone ph-plus-circle"></i>
                         </span>
@@ -53,7 +53,7 @@
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a href="<?= BASE_PATH ?>views/products/edit.php" class="pc-link">
+                    <a href="<?= BASE_PATH ?>products/edit" class="pc-link">
                         <span class="pc-micon">
                             <i class="ph-duotone ph-pencil-simple"></i>
                         </span>
@@ -61,7 +61,7 @@
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a href="<?= BASE_PATH ?>views/products/delete.php" class="pc-link">
+                    <a href="<?= BASE_PATH ?>products/delete" class="pc-link">
                         <span class="pc-micon">
                             <i class="ph-duotone ph-trash"></i>
                         </span>
@@ -75,7 +75,7 @@
                     <i class="ph-duotone ph-buildings"></i>
                 </li>
                 <li class="pc-item">
-                    <a href="../application/calendar.html" class="pc-link">
+                    <a href="<?= BASE_PATH ?>calendar" class="pc-link">
                         <span class="pc-micon">
                             <i class="ph-duotone ph-calendar-blank"></i>
                         </span>
@@ -83,7 +83,7 @@
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a href="../application/chat.html" class="pc-link">
+                    <a href="<?= BASE_PATH ?>chat" class="pc-link">
                         <span class="pc-micon">
                             <i class="ph-duotone ph-chats-circle"></i>
                         </span>
@@ -91,7 +91,7 @@
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a href="../application/mail.html" class="pc-link">
+                    <a href="<?= BASE_PATH ?>mail" class="pc-link">
                         <span class="pc-micon">
                             <i class="ph-duotone ph-envelope-open"></i>
                         </span>
@@ -99,7 +99,7 @@
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a href="../pages/contact-us.html" class="pc-link">
+                    <a href="<?= BASE_PATH ?>contact" class="pc-link">
                         <span class="pc-micon">
                             <i class="ph-duotone ph-target"></i>
                         </span>
@@ -145,25 +145,25 @@
                                     <div class="dropdown-menu">
                                         <ul>
                                             <li>
-                                                <a class="pc-user-links">
+                                                <a class="pc-user-links" href="<?= BASE_PATH ?>my-account">
                                                     <i class="ph-duotone ph-user"></i>
                                                     <span>My Account</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="pc-user-links">
+                                                <a class="pc-user-links" href="<?= BASE_PATH ?>settings">
                                                     <i class="ph-duotone ph-gear"></i>
                                                     <span>Settings</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="pc-user-links">
+                                                <a class="pc-user-links" href="<?= BASE_PATH ?>lock-screen">
                                                     <i class="ph-duotone ph-lock-key"></i>
                                                     <span>Lock Screen</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="pc-user-links">
+                                                <a class="pc-user-links" href="<?= BASE_PATH ?>logout">
                                                     <i class="ph-duotone ph-power"></i>
                                                     <span>Logout</span>
                                                 </a>
