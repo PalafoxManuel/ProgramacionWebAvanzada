@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #f0f0f0;
+            height: 100vh;
+            margin: 0;
+        }
+        canvas {
+            border: 1px solid black;
+            background: white;
+            margin-top: 20px;
+        }
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .toolbar select, .toolbar input {
+            padding: 5px;
+        }
+        .toolbar button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .toolbar button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <label>Tool: 
+            <select id="tool">
+                <option value="brush">Brush</option>
+                <option value="eraser">Eraser</option>
+                <option value="rectangle">Rectangle</option>
+                <option value="circle">Circle</option>
+                <option value="triangle">Triangle</option>
+            </select>
+        </label>
+        <label>Brush Style: 
+            <select id="brushStyle">
+                <option value="solid">Solid</option>
+                <option value="dashed">Dashed</option>
+                <option value="dotted">Dotted</option>
+                <option value="circle">Circular</option>
+                <option value="square">Square</option>
+            </select>
+        </label>
+        <label>Color: 
+            <input type="color" id="color" value="#000000">
+        </label>
+        <label>Line Width: 
+            <input type="range" id="lineWidth" min="1" max="10" value="2">
+        </label>
+        <label>
+            <input type="checkbox" id="fillShape"> Filled
+        </label>
+        <button id="clearCanvas">Clear Canvas</button>
+        <button id="downloadImage">Download Image</button>
+    </div>
+    <canvas id="drawingCanvas" width="500" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const toolSelector = document.getElementById('tool');
+        const brushStyleSelector = document.getElementById('brushStyle');
+        const colorPicker = document.getElementById('color');
+        const lineWidthRange = document.getElementById('lineWidth');
+        const clearButton = document.getElementById('clearCanvas');
+        const downloadButton = document.getElementById('downloadImage');
+        const fillShapeCheckbox = document.getElementById('fillShape');
+
+        let isDrawing = false;
+        let startX = 0;
+        let startY = 0;
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            startX = e.offsetX;
+            startY = e.offsetY;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+
+            if (toolSelector.value === 'brush' || toolSelector.value === 'eraser') {
+                drawBrush(e.offsetX, e.offsetY);
+            }
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            if (toolSelector.value !== 'brush' && toolSelector.value !== 'eraser') {
+                drawShape(e.offsetX, e.offsetY);
+            }
+            isDrawing = false;
+        });
+
+        canvas.addEventListener('mouseout', () => (isDrawing = false));
+
+        clearButton.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        downloadButton.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'drawing.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+
+        function drawBrush(x, y) {
+            const brushStyle = brushStyleSelector.value;
+            ctx.strokeStyle = toolSelector.value === 'eraser' ? '#ffffff' : colorPicker.value;
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.lineWidth = lineWidthRange.value;
+
+            if (brushStyle === 'solid') {
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            } else if (brushStyle === 'dashed') {
+                ctx.setLineDash([10, 5]);
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            } else if (brushStyle === 'dotted') {
+                ctx.setLineDash([2, 8]);
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            } else if (brushStyle === 'circle') {
+                ctx.beginPath();
+                ctx.arc(x, y, lineWidthRange.value / 2, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (brushStyle === 'square') {
+                ctx.fillRect(x - lineWidthRange.value / 2, y - lineWidthRange.value / 2, lineWidthRange.value, lineWidthRange.value);
+            }
+
+            [startX, startY] = [x, y];
+        }
+
+        function drawShape(endX, endY) {
+            ctx.strokeStyle = colorPicker.value;
+            ctx.lineWidth = lineWidthRange.value;
+            ctx.fillStyle = colorPicker.value;
+
+            const width = endX - startX;
+            const height = endY - startY;
+            const isFilled = fillShapeCheckbox.checked;
+
+            ctx.beginPath();
+            switch (toolSelector.value) {
+                case 'rectangle':
+                    ctx.rect(startX, startY, width, height);
+                    if (isFilled) ctx.fill();
+                    break;
+                case 'circle':
+                    const radius = Math.sqrt(width ** 2 + height ** 2) / 2;
+                    const centerX = startX + width / 2;
+                    const centerY = startY + height / 2;
+                    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                    if (isFilled) ctx.fill();
+                    break;
+                case 'triangle':
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(endX, endY);
+                    ctx.lineTo(startX - (endX - startX), endY);
+                    ctx.closePath();
+                    if (isFilled) ctx.fill();
+                    break;
+            }
+            ctx.stroke();
+        }
+    </script>
+</body>
+</html>
